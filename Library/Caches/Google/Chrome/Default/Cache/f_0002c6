@@ -1,0 +1,404 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=iso-8859-1"></meta>
+    <link rel="stylesheet" type="text/css" href="style.css"></link>
+    <title>HTML Syntax Reference Sheet</title>
+</head>
+
+<body>
+<!--Header Banner and Logo-->
+    <center><a href="index.html" id="top" name="top"><img src="banner.jpg" alt="FNAL Banner" width="512" height="87" /></a></center>
+    <span style="float:left;position:absolute;top:20px;left:20px">
+        <a href="index.html"><img src="pbarlogo.gif" alt="Pbar Logo" height="60px" /></a><br />
+        <b>&nbsp;&nbsp;Home</b>
+    </span>
+<!--Title Header-->
+    <div id="Header2">
+        <h1>HTML Syntax Reference Sheet</h1><br />
+    </div>
+<!--Side Navigation Menu-->
+    <div id="Menu3">
+    <h3 style="text-align:left">Navigation</h3>
+        <table>
+            <tr><td><a href="#top">Back to Top</a></td></tr>
+            <tr><td><a href="#simple" class="button2">Simple Text Formatting</a></td></tr>
+            <tr><td><a href="#css" class="button2">CSS Text Formatting</a></td></tr>
+            <tr><td><a href="#closing" class="button2">Self-Closing Tags</a></td></tr>
+            <tr><td><a href="#char" class="button2">Useful Characters</a></td></tr>
+            <tr><td><a href="#lists" class="button2">How to Create Lists</a></td></tr>
+            <tr><td><a href="#tables" class="button2">How to Create Tables</a></td></tr>
+        </table>
+    <h3 style="text-align:left">References</h3>
+        <table>
+            <tr><td><a href="documents/device_help/HTML%20Syntax/HTML%20syntax.htm" class="button2">Old HTML 4 Reference</a></td></tr>
+            <tr><td><a href="documents/device_help/HTML%20Syntax/symbols.html" class="button2">Character Reference</a></td></tr>
+            <tr><td><a href="http://www.w3schools.com/css/css_colornames.asp" class="button2">Colors Reference</a></td></tr>
+            <tr><td><a href="http://www.w3.org/TR/xhtml1/" class="button2">Offical XHTML Outline</a></td></tr>
+            <tr><td><a href="http://www.w3schools.com" class="button2">W3C Online School</a></td></tr>
+        </table>
+    </div>
+<!--Content Section-->
+    <div style="position:absolute;left:275px;top:200px;text-align:left">
+        <br />
+        <p style="width:90%"><b>Please send Questions/Comments to <a href="mailto:awatts@fnal.gov">awatts@fnal.gov</a></b></p>
+        <p style="width:90%">
+            &nbsp;&nbsp;&nbsp;This page is meant to outline changes in HTML 4.01 standards in order to assure compliance with the <a href="http://www.w3.org"> World Wide Web Consortium</a>'s migration to XHTML 1.0. XHTML is very similar to HTML 4.01, but with strict syntax rules. Many textual formatting tags have been deprecated and will lose support in future browsers, and this page will give standards-compliant alternatives using inline CSS (Cascading Style Sheets). This page is meant as a reference, and is by no means complete. For a more complete turorial, use <a href="http://www.w3schools.com">W3 Schools</a>.&nbsp; 
+			Use the following link for examples of how to apply the content 
+			covered in this document to making Fermilab Accelerator Division
+			<a href="documents/HTML-for-Elog-Users/HTML-for-Elog-users.htm">
+			Electronic Logbook entries</a>.</p>
+        <p style="width:90%"><b>Note:</b><span style="color:red"> All tags should be in lowercase.</span> This is very important for XHTML 1.0 standards compliance</p>
+        <p style="width:90%">If there is any subject or method that you would like added to this page, please do not hesitate to contact the above mentioned email address.</p>
+        <br />
+    <!--Simple Text Formatting-->
+        <a id="simple" name="simple"><h2>Simple Text Formatting</h2></a>
+        These tags have not changed since HTML 4
+        <br /><br />
+            <table border="1" style="text-align:center;">
+                <tr>
+                    <td><b>Description</b></td>
+                    <td><b>Example Syntax</b></td>
+                    <td><b>Result</b></td>
+                </tr>
+                <tr>
+                    <td>Bolded Text</td>
+                    <td><xmp><b>Bolded Text</b></xmp></td>
+                    <td><b>Bolded Text</b></td>
+                </tr>
+                <tr>
+                    <td>Italicized Text</td>
+                    <td><xmp><i>Italicized Text</i></xmp></td>
+                    <td><i>Italicized Text</i></td>
+                </tr>
+                <tr>
+                    <td>Deleted Text</td>
+                    <td><xmp><del>Deleted Text</del></xmp></td>
+                    <td><del>Deleted Text</del></td>
+                </tr>
+                <tr>
+                    <td>Big Text</td>
+                    <td><xmp><big>Big Text</big></xmp></td>
+                    <td><big>Big Text</big></td>
+                </tr>
+                <tr>
+                    <td>Small Text</td>
+                    <td><xmp><small>Small Text</small></xmp></td>
+                    <td><small>Small Text</small></td>
+                </tr>
+                <tr>
+                    <td>Subscript</td>
+                    <td><xmp>H<sub>2</sub>O</xmp></td>
+                    <td>H<sub>2</sub>O</td>
+                </tr>
+                <tr>
+                    <td>Superscript</td>
+                    <td><xmp>3 x 10<sup>8</sup></xmp></td>
+                    <td>3 x 10<sup>8</sup></td>
+                </tr>
+                <tr>
+                    <td>HTML Ignore</td>
+                    <td><xmp><xmp><b>Text</b>&#60;/xmp></xmp></td>
+                    <td><xmp><b>Text</b></xmp></td>
+                </tr>
+                <tr>
+                    <td>Hyperlink</td>
+                    <td><xmp><a href="http://www.google.com">Google</a></xmp></td>
+                    <td><a href="http://www.google.com">Google</a></td>
+                </tr>
+                <tr>
+                    <td>Email Hyperlink</td>
+                    <td><xmp><a href="mailto:mail@mail.com">mail@mail.com</a></xmp></td>
+                    <td><a href="mailto:mail@mail.com">mail@mail.com</a></td>
+            </table>
+            <br /><br />
+
+    <!--CSS Text Formatting-->
+        <a id="css" name="css"><h2>CSS Text Formatting</h2></a>
+        <p style="width:90%">These features <b><i>must</i></b> be used as arguments of the "style" argument of a "span" or "div" tag surrounding the text.</p>
+        <p style="width:90%">Attributes may be combined under style="" of the SPAN tag and seperated by a semicolon as such: <xmp><span style="attribute:value;attribute2:value">Text</span></xmp></p>
+            <table border="1" style="text-align:center">
+                <tr>
+                    <td><b>Description</b></td>
+                    <td><b>Attribute Syntax</b></td>
+                    <td><b>Result</b></td>
+                </tr>
+                <tr>
+                    <td>Underlined Text</td>
+                    <td>text-decoration:underline</td>
+                    <td><span style="text-decoration:underline">Underlined Text</span></td>
+                </tr>
+                <tr>
+                    <td>Font Color</td>
+                    <td>color:red</td>
+                    <td><span style="color:red">Red Text</span></td>
+                </tr>
+                <tr>
+                    <td>Aligned Text</td>
+                    <td>text-align:left/right/center</td>
+                    <td>Text will be aligned to the left, right, or center</td>
+                </tr>
+                <tr>
+                    <td>Change the Font</td>
+                    <td>font-family:fontname</td>
+                    <td>Text will be in style "fontname"</td>
+                </tr>
+                <tr>
+                    <td>Font Size</td>
+                    <td>font-size:200%</td>
+                    <td><span style="font-size:200%">2x Size Text</span></td>
+                </tr>
+            </table>
+            <br /><br />
+
+    <!--Self-closing Tags-->
+        <a id="closing" name="closing"><h2>Self-closing Tags</h2></a>
+        <p style="width:90%">Tags that, by definition, contain nothing between the opening and closing tags <b><i>must self-close</b></i> with a space and forward slash:</p>
+            <table border="1" style="text-align:center">
+                <tr>
+                    <td><b>Images</b></td>
+                    <td><xmp><img src="something.jpg" /></xmp></td>
+                </tr>
+                <tr>
+                    <td><b>Carriage Return</b></td>
+                    <td><xmp><br /></xmp></td>
+                </tr>
+                <tr>
+                    <td><b>Horizontal Breaking Line</b></td>
+                    <td><xmp><hr /></xmp></td>
+                </tr>
+            </table>
+            <br /><br />
+    <!--Useful Characters-->
+        <a id="char" name="char"><h2>Useful Characters</h2></a>
+        <p style="width:90%">This is a small list of characters that may be useful in the E-logs. For a more complete list, see <a href="documents/device_help/HTML%20Syntax/symbols.html"> Character Chart</a>.</p>
+        <p style="width:90%"><b>Note:</b>All characters are of the format: (ampersand)(charname)(semicolon).</p>
+            <table border="1">
+                <tr>
+                    <td><b>Description</b></td>
+                    <td><b>Syntax</b></td>
+                    <td><b>Result</b></td>
+                </tr>
+                <tr>
+                    <td>Function Symbol</td>
+                    <td>&amp;fnof;</td>
+                    <td>&fnof;</td>
+                </tr>
+                <tr>
+                    <td>Greek Capital Letter</td>
+                    <td>&(Lettername);</td>
+                    <td>&amp;Delta; <i>yields</i> &Delta;</td>
+                </tr>
+                <tr>
+                    <td>Greek Lowercase Letter</td>
+                    <td>&(lettername);</td>
+                    <td>&amp;delta; <i>yields</i> &delta;</td>
+                </tr>
+                <tr>
+                    <td>Arrows</td>
+                    <td>&amp;uarr;, &amp;darr;, &amp;larr;, &amp;rarr;, &amp;crarr;, &amp;harr;</td>
+                    <td>&uarr;, &darr;, &larr;, &rarr;, &crarr;, &harr;</td>
+                </tr>
+                <tr>
+                    <td>For All Symbol</td>
+                    <td>&amp;forall;</td>
+                    <td>&forall;</td>
+                </tr>
+                <tr>
+                    <td>Partial Differential</td>
+                    <td>&amp;part;</td>
+                    <td>&part;</td>
+                </tr>
+                <tr>
+                    <td>"There Exists" Symbol</td>
+                    <td>&amp;exist;</td>
+                    <td>&exist;</td>
+                </tr>
+                <tr>
+                    <td>Empty/Null Set</td>
+                    <td>&amp;empty;</td>
+                    <td>&empty;</td>
+                </tr>
+                <tr>
+                    <td>Nable Symbol</td>
+                    <td>&amp;nabla;</td>
+                    <td>&nabla;</td>
+                </tr>
+                <tr>
+                    <td>"Element of" Symbol</td>
+                    <td>&amp;isin;</td>
+                    <td>&isin;</td>
+                </tr>
+                <tr>
+                    <td>"Not an Element of" Symbol</td>
+                    <td>&amp;notin;</td>
+                    <td>&notin;</td>
+                </tr>
+                <tr>
+                    <td>"Contains as Member" Symbol</td>
+                    <td>&amp;ni;</td>
+                    <td>&ni;</td>
+                </tr>
+                <tr>
+                    <td>Radical Sign</td>
+                    <td>&amp;radic;</td>
+                    <td>&radic;</td>
+                </tr>
+                <tr>
+                    <td>"Proportional To" Symbol</td>
+                    <td>&amp;prop;</td>
+                    <td>&prop;</td>
+                </tr>
+                <tr>
+                    <td>Infinity Symbol</td>
+                    <td>&amp;infin;</td>
+                    <td>&infin;</td>
+                </tr>
+                <tr>
+                    <td>Angle Symbol</td>
+                    <td>&amp;ang;</td>
+                    <td>&ang;</td>
+                </tr>
+                <tr>
+                    <td>Integral Symbol</td>
+                    <td>&amp;int;</td>
+                    <td>&int;</td>
+                </tr>
+                <tr>
+                    <td>"Therefore" Symbol</td>
+                    <td>&amp;there4;</td>
+                    <td>&there4;</td>
+                </tr>
+                <tr>
+                    <td>"Similar to" Symbol</td>
+                    <td>&amp;sim;</td>
+                    <td>&sim;</td>
+                </tr>
+                <tr>
+                    <td>"Almost Equal to" Symbol</td>
+                    <td>&amp;asymp;</td>
+                    <td>&asymp;</td>
+                </tr>
+                <tr>
+                    <td>"Not Equal to" Symbol</td>
+                    <td>&amp;ne;</td>
+                    <td>&ne;</td>
+                </tr>
+                <tr>
+                    <td>"Equivalent to" Symbol</td>
+                    <td>&amp;equiv;</td>
+                    <td>&equiv;</td>
+                </tr>
+                <tr>
+                    <td>"Less-than or Equal to" Symbol</td>
+                    <td>&amp;le;</td>
+                    <td>&le;</td>
+                </tr>
+                <tr>
+                    <td>"Greather-than or Equal to" Symbol</td>
+                    <td>&amp;ge;</td>
+                    <td>&ge;</td>
+                </tr>
+                <tr>
+                    <td>"Vector Product" Symbol</td>
+                    <td>&amp;otimes;</td>
+                    <td>&otimes;</td>
+                </tr>
+                <tr>
+                    <td>"Perpendicular to" Symbol</td>
+                    <td>&amp;perp;</td>
+                    <td>&perp;</td>
+                </tr>
+                <tr>
+                    <td>"Much Greater Than" Symbol</td>
+                    <td>&amp;raquo;</td>
+                    <td>&raquo;</td>
+                </tr>
+                <tr>
+                    <td>"Much Less Than" Symbol</td>
+                    <td>&amp;laquo;</td>
+                    <td>&laquo;</td>
+                </tr>
+                <tr>
+                    <td>Degree Symbol</td>
+                    <td>&amp;deg;</td>
+                    <td>&deg;</td>
+                </tr>
+                <tr>
+                    <td>"Plus/Minus Error" Symbol</td>
+                    <td>&amp;plusmn;</td>
+                    <td>&plusmn;</td>
+                </tr>
+                <tr>
+                    <td>"Letter O with Slash" Symbol</td>
+                    <td>&amp;Oslash;</td>
+                    <td>&Oslash;</td>
+                </tr>
+                <tr>
+                    <td>No break space</td>
+                    <td>&amp;nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+            </table>
+            <br /><br />
+
+    <!--How to Create Lists-->
+        <a id="lists" name="lists"><h2>How to Create Lists</h2></a>
+        <p style="width:90%"><b>Unordered list:</b></p>
+            <xmp>uses <ul> and </ul> tags, and each list item must be inside <li> and </li></xmp>
+        <p style="width:90%">Example:
+        <xmp>
+        <ul>
+            <li>List item</li>
+            <li>Second Iten</li>
+            <li>Third Item</li>
+        <ul>
+        </xmp>
+        Yields:
+        <ul><li>List item</li><li>Second Item</li><li>Third Item</li></ul></p>
+
+        <p style="width:90%"><b>Ordered list:</b></p>
+            <xmp>uses <ol> and </ol> tags, and each list item must be inside <li> and </li></xmp>
+        <p style="width:90%">Example: <ol><li>List item</li><li>Second Item</li><li>Third Item</li></ol></p>
+        <br /><hr /><br />
+    
+    <!--How to Create Tables-->
+        <a id="tables" name="tables"><h2>How to Create Tables</h2>
+        <p style="width:90%">Simple data tables consist of three parts:
+        <xmp><table>, <tr> and <td></xmp>
+        Where all elements are contained within the <b>&lt;table&gt;</b> tags, <b>&lt;tr&gt;</b> tags surround a row, and <b>&lt;td&gt;</b> tags surround a table cell's content. As an example, the code:
+        <xmp>
+        <table border="1">
+            <tr>
+                <td>Row 1, Cell 1</td>
+                <td>Row 1, Cell 2</td>
+            </tr>
+            <tr>
+                <td>Row 2, Cell 1</td>
+                <td>Row 2, Cell 2</td>
+            </tr>
+        </table>
+        </xmp>
+        Yields the table with a border (notice above the use of the border="1" attribute to create a border):<br />
+        <table border="1">
+            <tr>
+                <td>Row 1, Cell 1</td>
+                <td>Row 1, Cell 2</td>
+            </tr>
+            <tr>
+                <td>Row 2, Cell 1</td>
+                <td>Row 2, Cell 2</td>
+            </tr>
+        </table>
+        <br />
+        Since CSS attributes may be added to almost any HTML tag using the style attribute, the <a href="http://www.w3schools.com">W3C Online School</a> should be consulted for further table formatting using CSS, such as font and cell background color, padding, and height/width settings.
+        <p>&nbsp;</p>
+        
+    <p style="text-align:center"><a href="#top">Back to Top</a></p>
+<!--End of Content Section-->
+    </div>
+    
+</body>
+</html>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>com.apple.CoreSimulator.SimRuntime.iOS-8-3</key>
+	<dict>
+		<key>com.apple.CoreSimulator.SimDeviceType.Resizable-iPad</key>
+		<string>CC4398EB-586B-4599-90D0-029E8C7DE0C2</string>
+		<key>com.apple.CoreSimulator.SimDeviceType.Resizable-iPhone</key>
+		<string>5D351CD8-85EF-45A4-9649-5C5076354184</string>
+		<key>com.apple.CoreSimulator.SimDeviceType.iPad-2</key>
+		<string>99B14B48-93E7-47C1-9F3D-639941881D64</string>
+		<key>com.apple.CoreSimulator.SimDeviceType.iPad-Air</key>
+		<string>56BCC05A-07D9-454D-B28F-F6C487D0F941</string>
+		<key>com.apple.CoreSimulator.SimDeviceType.iPad-Retina</key>
+		<string>98DD242A-33AA-47D7-86C1-3A59DA22BBE2</string>
+		<key>com.apple.CoreSimulator.SimDeviceType.iPhone-4s</key>
+		<string>F28D3954-935E-4359-97C6-59129D58DD54</string>
+		<key>com.apple.CoreSimulator.SimDeviceType.iPhone-5</key>
+		<string>2AABB06E-4898-4203-8BA5-CF82506A8EA0</string>
+		<key>com.apple.CoreSimulator.SimDeviceType.iPhone-5s</key>
+		<string>AAF10F6F-BB62-42A0-8DC5-C522C5680826</string>
+		<key>com.apple.CoreSimulator.SimDeviceType.iPhone-6</key>
+		<string>E4A33BE9-90B6-4CAB-A2E9-589E25328AB7</string>
+		<key>com.apple.CoreSimulator.SimDeviceType.iPhone-6-Plus</key>
+		<string>6F4C28FA-6C1A-4552-9F13-DDFA17265441</string>
+	</dict>
+	<key>version</key>
+	<integer>0</integer>
+</dict>
+</plist>

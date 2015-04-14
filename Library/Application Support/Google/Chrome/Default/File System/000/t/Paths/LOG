@@ -1,0 +1,11 @@
+2015/04/14-08:29:25.512 28679 Reusing MANIFEST /Users/tania/Library/Application Support/Google/Chrome/Default/File System/000/t/Paths/MANIFEST-000001
+2015/04/14-08:29:25.513 28679 Recovering log #7
+2015/04/14-08:29:25.513 28679 Level-0 table #10: started
+2015/04/14-08:29:25.514 28679 Level-0 table #10: 947 bytes OK
+2015/04/14-08:29:25.515 28679 Delete type=0 #7
+2015/04/14-08:34:18.457 140855 Compacting 1@0 + 1@1 files
+2015/04/14-08:34:18.458 140855 Generated table #12: 25 keys, 795 bytes
+2015/04/14-08:34:18.458 140855 Compacted 1@0 + 1@1 files => 795 bytes
+2015/04/14-08:34:18.458 140855 compacted to: files[ 0 1 0 0 0 0 0 ]
+2015/04/14-08:34:18.458 140855 Delete type=2 #8
+2015/04/14-08:34:18.458 140855 Delete type=2 #10

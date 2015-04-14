@@ -1,0 +1,1068 @@
+var juiceservice=("https:"==document.location.protocol?"https:":"http:")+"//aps.hearstnp.com/";
+var APSpageID=42317;
+var APSGenerationID="";
+var APSResponsiveDesign=true;
+var aps=aps||{};
+aps.loadedModules=[{"name":"logs_and_events","description":"functions pertaining to logging and our event structure"},{"name":"common","description":"functions common to sync and async"},{"name":"googlePubTagSync","description":"synchronous page"},{"name":"initialUpdatePageLevelKVPS patch","description":"temporary patch to fix third party headers"},{"name":"wat_variables_patch","description":"patch which allows waiting on variables"},{"name":"prev_line_item","description":"assigns prev_line_item using first 300 width ad"},{"name":"roadblock","description":"roadblock line item id from a728"},{"name":"PageUrl","description":"PageUrl"},{"name":"page_type and divid","description":"page_type2 page_type3 and divid"},{"name":"juice console loader","description":"loads juice console when query string present"},{"name":"amazon_a9","description":"amazon a9 key value"},{"name":"proximic","description":"sets kvp named prox_other using on page pxSegmentIDs variable"},{"name":"criteo","description":"criteo "}];
+var aps=aps||{};
+aps.juiceLog=[];
+aps.modules=[];
+aps.events=[];
+aps.event={};
+aps.app_events={};
+aps.logtype={};
+aps.event.on_dom_loaded=10;
+aps.event.on_update_page_level_targeting=20;
+aps.event.on_begin_define_tags=40;
+aps.event.on_end_define_tags=50;
+aps.event.on_ad_rendered=60;
+aps.event.on_dynamic_ad_rendered=80;
+aps.event.on_before_enable_google_services=100;
+aps.event.on_set_dynamic_ad_targeting=110;
+aps.event.on_before_display_ad=120;
+aps.event.on_script_loaded=130;
+aps.event.on_before_refresh_ad=140;
+aps.logtype.info=0;
+aps.logtype.warning=1;
+aps.logtype.error=2;
+aps.registerEvent=function(b,a){var c=aps.events[b];
+aps.events[b]=function(d){c&&c(d);
+a(d)
+}
+};
+aps.registerAppEvent=function(b,a){var c=aps.app_events[b];
+aps.app_events[b]=function(d){c&&c(d);
+a(d)
+}
+};
+aps.fireEvent=function(a,b){aps.events[a]&&aps.events[a](b)
+};
+function onHearstAdEvent(){var a=arguments[0],b;
+b=(arguments.length==2)?arguments[1]:null;
+aps.app_events[a]&&aps.app_events[a](b)
+}aps.logInfo=function(a){aps.logEvent(new Date(),a,aps.logtype.info)
+};
+aps.topLogInfo=function(b){try{top.aps.logInfo(b)
+}catch(a){}};
+aps.toplogException=function(b,a){try{top.aps.logException(b)
+}catch(a){}};
+aps.logWarning=function(a){aps.logEvent(new Date(),a,aps.logtype.warning)
+};
+aps.logError=function(a){aps.logEvent(new Date(),a,aps.logtype.error)
+};
+aps.logException=function(b,a){if(typeof a!="undefined"){if(typeof a.message!="undefined"){aps.logEvent(new Date(),b+a.message);
+return
+}}aps.logEvent(new Date(),b,aps.logtype.error)
+};
+aps.logEvent=function(c,a,b){aps.juiceLog.push({d:c,m:a,t:b})
+};
+aps.pageKVPsByDomID=[];
+aps.hearstPlaceAdHasUpdatedKVPS=false;
+aps.current_page_kvps={};
+aps.adScripts=aps.adScripts||{};
+aps.queuedScriptCount=aps.queuedScriptCount||0;
+aps.adScriptsLoaded=false;
+aps.loadGoogleService=function(a){if(a){window.onJuiceEvent_LoadingGPT&&window.onJuiceEvent_LoadingGPT();
+if(!aps.googleLoaded){var b=document.createElement("script");
+b.async=true;
+b.type="text/javascript";
+var e="https:"==document.location.protocol;
+b.src=(e?"https:":"http:")+"//www.googletagservices.com/tag/js/gpt.js";
+var c=document.getElementsByTagName("script")[0];
+c.parentNode.insertBefore(b,c)
+}}else{window.onJuiceEvent_LoadingGPT&&window.onJuiceEvent_LoadingGPT();
+var e="https:"==document.location.protocol;
+var d=(e?"https:":"http:")+"//www.googletagservices.com/tag/js/gpt.js";
+document.write("<scr"+'ipt src="'+d+'"></scr'+"ipt>")
+}};
+aps.createGoogleTagContext=function(){aps.gcontext={};
+aps.gcontext.googletag=googletag;
+aps.gcontext.pubads=function(){var a=googletag;
+var b=aps;
+this.setTargeting=function(c,d){b.pubads_setTargeting(a,c,d)
+};
+this.clearTargeting=function(c){b.pubads_clearTargeting(a,c)
+};
+this.aps=b;
+return this
+}
+};
+aps.pubads_setTargeting=function(a,b,c){aps.current_page_kvps[b]=c;
+a.pubads().setTargeting(b,c)
+};
+aps.pubads_clearTargeting=function(a,b){aps.ocurrent_page_kvps[b]=null;
+a.pubads().clearTargeting(b)
+};
+aps.getQueryParameterByName=function(a){a=a.replace(/[\[]/,"\\[").replace(/[\]]/,"\\]");
+var b=new RegExp("[\\?&]"+a+"=([^&#]*)"),c=b.exec(location.search);
+return c==null?null:decodeURIComponent(c[1].replace(/\+/g," "))
+};
+aps.initialUpdatePageLevelKVPS=function(a){if(!aps.hearstPlaceAdHasUpdatedKVPS){aps.hearstPlaceAdHasUpdatedKVPS=true;
+aps.logInfo("calling updatePageLevelKVPS from hpa");
+top.aps.updatePageLevelKVPS(a)
+}};
+aps.updatePageLevelKVPS=function(apsContext){var aps=apsContext.aps;
+for(var i=0;
+i<aps.page_kvps.length;
+i++){var kvp=aps.page_kvps[i];
+var kvp_value=kvp.value;
+try{if(kvp_value.substring(0,1)=="{"){kvp_value=window.eval(kvp_value.replace("{","").replace("}",""));
+if(typeof(kvp_value)=="undefined"){aps.logWarning("Undefined value for page Level KVP: "+kvp.key);
+continue
+}}apsContext.pubads().setTargeting(kvp.key,kvp_value)
+}catch(e){aps.logWarning("Exception setting page Level KVP: "+kvp.key+" message: "+e.message)
+}}};
+aps.setupResponsiveMappings=function(c,a){var b=aps.generateSizeMappings(a);
+c.defineSizeMapping(b)
+};
+aps.generateSizeMappings=function(a){var e=[];
+if(a.sizeMappings!=undefined&&a.sizeMappings.length>0){var c=[];
+var f=[];
+var m={};
+for(var g=0;
+g<a.sizeMappings.length;
+g++){var d=a.sizeMappings[g].split("x");
+var b=[parseInt(d[1],10),parseInt(d[2],10)];
+var j=parseInt(d[0],10);
+var h=m[d[0]];
+if(h==undefined){h=c.length;
+c[h]=new Array();
+m[d[0]]=h;
+f.push(d[0])
+}c[h].push(b)
+}for(g=0;
+g<f.length;
+g++){var l=[parseInt(f[g],10),100];
+var h=m[f[g]];
+var k=c[h];
+if(k.length==1){e.push([l,k[0]])
+}else{e.push([l,k])
+}}}else{e.push([[0,0],[a.width,a.height]])
+}return e
+};
+function hearstSetAdPageType(e){if(aps.adSlots.length>0){for(var c=0;
+c<aps.adSlots.length;
+c++){var b=false;
+var a=page.ads[c];
+var f=aps.adSlots[c];
+for(var d=0;
+d<a.kvps.length;
+d++){if(a.kvps[d].key=="page_type"){b=true;
+a.kvps[d].value=e;
+break
+}}if(!b){a.kvps.push({key:"page_type",value:e})
+}setDFPSlotTargeting(a,f,true)
+}}}function setDFPSlotTargeting(a,e,b){if(b){e.clearTargeting()
+}for(var c=0;
+c<a.kvps.length;
+c++){var d=a.kvps[c];
+e.setTargeting(d.key,d.value)
+}}aps.getAdDefinitionByCode=function(a){return aps.adsByCode[a]
+};
+aps._initAdDefinitionByCode=function(){for(var b=0;
+b<definedTags.ads.length;
+b++){var a=definedTags.ads[b];
+a.refreshable=false;
+a.isDynamic=false;
+a.renderCount=1;
+a.trackScrollPosition=true;
+aps.adsByCode[a.code]=a
+}};
+aps.getNextDynamicAdDivID=function(b){var a=aps.getAdDefinitionByCode(b);
+return b+"-"+aps.divIDPostfix+"-"+a.renderCount
+};
+aps.getLastDynamicAdDivID=function(b){var a=aps.getAdDefinitionByCode(b);
+return b+"-"+aps.divIDPostfix+"-"+(a.renderCount-1)
+};
+function hearstGetNextDynamicAdDivID(a){return aps.getNextDynamicAdDivID(a)
+}function hearstGetLastDynamicAdDivID(a){return aps.getLastDynamicAdDivID(a)
+}aps.MarkDivIDAsUnique=function(){var b=arguments[0];
+var a=(arguments.length>=2)?arguments[1]:b;
+aps.codesByDomID[b]=a
+};
+aps.isDivIDUniqueForAdPlacement=function(b,a){if(typeof(aps.codesByDomID[a])!="undefined"){if(aps.codesByDomID[a]=="passthrough"){return true
+}aps.logWarning("A duplicate div id was specified ("+a+") for "+b+".  The call was ignored.");
+return false
+}return true
+};
+aps.logPageKVPsforDiv=function(a){aps.pageKVPsByDomID[a]={};
+var d=aps.current_page_kvps;
+var b=aps.pageKVPsByDomID[a];
+for(var c in d){if(!d.hasOwnProperty(c)){continue
+}b[c]=d[c]
+}};
+function setDfpSearchValues(a){if(typeof(aps)!="undefined"&&aps!=null){aps.key=aps.key||"";
+aps.values=aps.values||"";
+try{a.pubads().setTargeting(aps.key,aps.values)
+}catch(b){}}}aps.run_once=function(b,a){var c;
+return function(){if(b){c=b.apply(a||this,arguments);
+b=null
+}return c
+}
+};
+aps.contentLoaded=function(m,f){var c=false,l=true,b=m.document,k=b.documentElement,a=b.addEventListener?"addEventListener":"attachEvent",j=b.addEventListener?"removeEventListener":"detachEvent",i=b.addEventListener?"":"on",g=function(n){if(n.type=="readystatechange"&&b.readyState!="complete"){return
+}(n.type=="load"?m:b)[j](i+n.type,g,false);
+if(!c&&(c=true)){f.call(m,n.type||n)
+}},h=function(){try{k.doScroll("left")
+}catch(n){setTimeout(h,50);
+return
+}g("poll")
+};
+if(b.readyState=="complete"){f.call(m,"lazy")
+}else{if(b.createEventObject&&k.doScroll){try{l=!m.frameElement
+}catch(d){}if(l){h()
+}}b[a](i+"DOMContentLoaded",g,false);
+b[a](i+"readystatechange",g,false);
+m[a](i+"load",g,false)
+}};
+aps.loadAsyncScripts=function(){if(aps.topWindow!=self){return
+}aps.logInfo("loadingAsyncScripts: "+aps.queuedScriptCount);
+for(var a in aps.adScripts){if(aps.adScripts.hasOwnProperty(a)){var c=new Date();
+var b=a;
+aps.adScripts[b].loadstart=c;
+if(aps.adScripts[b].testFunction==null){aps._loadScript(aps.adScripts[b].path,function(){aps.adScripts[b].loadend=new Date();
+aps.adScripts[b].complete=true;
+aps.fireEvent(aps.event_on_script_loaded,{scriptDetails:aps.adScripts[b]})
+})
+}}}aps.testAsyncWaitFunctions();
+aps.initializeScriptLoadChecking()
+};
+aps.testAsyncWaitFunctions=function(){for(var a in aps.adScripts){if(aps.adScripts.hasOwnProperty(a)){if(aps.adScripts[a].testFunction!=null&&aps.adScripts[a].complete==false){if(aps.adScripts[a].testFunction()){aps.adScripts[a].loadend=new Date();
+aps.adScripts[a].complete=true;
+aps.fireEvent(aps.event_on_script_loaded,{scriptDetails:aps.adScripts[a]})
+}}}}};
+aps.waitForScriptsToLoad=function(){if(top==self&&aps.queuedScriptCount>0&&aps.adScriptsLoaded==false){aps.logInfo("waitForScriptsToLoad start");
+var c=2000;
+var b=new Date().getTime();
+for(var a=0;
+a<10000000;
+a++){if(((new Date().getTime()-b)>c)||aps.adScriptsLoaded==true){break
+}}if(aps.adScriptsLoaded==false){aps.adScriptsLoaded=true;
+aps.logInfo("waitForScriptsToLoad timed out")
+}else{aps.logInfo("waitForScriptsToLoad complete")
+}}};
+aps.initializeScriptLoadChecking=function(){var c=this;
+var b=0;
+var a=aps.adScripts;
+aps.adScriptsLoaded=false;
+aps.logInfo("initializeScriptLoadChecking");
+c.loadCheck=setInterval(function(){if((b>50)||(aps.adScriptsLoaded=true)){if(b>50){aps.logError("ScriptLoadChecking timed out waiting for a script")
+}aps.adScriptsLoaded=true
+}else{aps.testAsyncWaitFunctions();
+var e=0;
+for(var d=0;
+d<Object.keys(a).length;
+d++){if(a[Object.keys(a)[d]].complete===true){e++
+}}if(e===Object.keys(a).length){aps.adScriptsLoaded=true
+}b++
+}if(aps.adScriptsLoaded==true){window.clearInterval(c.loadCheck);
+aps.logInfo("ScriptLoadChecking complete")
+}},50)
+};
+aps.queueScriptAsync=function(a,b){aps.adScripts[a]={name:a,path:b,testFunction:null,complete:false,loadstart:null,loadend:null};
+aps.queuedScriptCount++
+};
+aps.queueWaitFunction=function(a,b){aps.adScripts[a]={name:a,path:null,testFunction:b,complete:false,loadstart:null,loadend:null};
+aps.queuedScriptCount++
+};
+aps._loadScript=function(c,a){if(!c||!(typeof c==="string")){return
+}var b=document.createElement("script");
+if(typeof document.attachEvent==="object"){b.onreadystatechange=function(){if(b.readyState==="loaded"){if(a){a()
+}}}
+}else{b.onload=function(){if(a){a()
+}}
+}b.src=c;
+document.getElementsByTagName("head")[0].appendChild(b)
+};
+var googletag=googletag||{};
+googletag.cmd=googletag.cmd||[];
+var aps=aps||{};
+aps.viewportWidth=null;
+aps.scriptName="googleSync";
+aps.page=null;
+aps.singleSlotID=aps.singleSlotID||0;
+aps.adSlots=[];
+aps.interstitialAdDefs=[];
+aps.slotsByDivID=[];
+aps.renderInfo=[];
+aps.adsByCode=[];
+aps.codesByDomID=[];
+aps.callsByDomID=[];
+aps.dynamicSlots=[];
+aps.refreshableSlots=[];
+aps.childIFrames=[];
+aps.childIFramesByContainer=[];
+aps.divIDPostfix="ju1c3-TWFobmEgTWFobmE=";
+aps.leaderboardLineItemID=null;
+aps.isIFrameDynamicPage=(top!=self);
+if(aps.isIFrameDynamicPage){window.JuicePageUrl=top.JuicePageUrl;
+window.juiceservice=top.juiceservice;
+window.APSpageID=top.APSpageID;
+window.APSResponsiveDesign=top.APSResponsiveDesign;
+aps.useAsynchronus=true;
+aps.leaderboardLineItemID=top.aps.leaderboardLineItemID
+}aps.domLoaded=function(){aps.logInfo("domLoaded");
+aps.fireEvent(aps.event.on_dom_loaded)
+};
+(function(){aps.loadGoogleService(aps.isIFrameDynamicPage||aps.useAsynchronus)
+})();
+(function(){var a=juiceservice+"Scripts/initDefineAds.js";
+document.write("<scr"+'ipt src="'+a+'"></scr'+"ipt>")
+})();
+function defineTags(a){aps.loadAsyncScripts();
+aps._initAdDefinitionByCode();
+if(aps.useAsynchronus){googletag.cmd.push(function(){aps.setupGoogleTags(a)
+})
+}else{aps.setupGoogleTags(a)
+}}aps.setupGoogleTags=function(c){aps.logInfo("defining tags started");
+aps.createGoogleTagContext();
+window.onJuiceEvent_StartDefineTags&&window.onJuiceEvent_StartDefineTags();
+aps.fireEvent(aps.event.on_begin_define_tags);
+aps.page=c;
+aps.page_kvps=c.kvps;
+for(var b=0;
+b<c.ads.length;
+b++){var a=c.ads[b];
+if(a.interstitial){aps.interstitialAdDefs[a.code]=a;
+a.refreshJuiceAd=null
+}if((!a.interstitial&&!aps.isIFrameDynamicPage)||(aps.isIFrameDynamicPage&&a.code==aps.singleSlotID)){aps.createAdSlot(a,c)
+}}aps.finalizeGoogleSetup();
+window.onJuiceEvent_endDefineTags&&window.onJuiceEvent_endDefineTags();
+aps.fireEvent(aps.event.on_end_define_tags)
+};
+aps.finalizeGoogleSetup=function(){top.setDfpSearchValues(aps.gcontext);
+if(!aps.useAsynchronus){googletag.pubads().enableSyncRendering()
+}googletag.pubads().collapseEmptyDivs();
+googletag.pubads().addEventListener("slotRenderEnded",function(a){if(typeof a.slot.getSlotId!="undefined"){if(typeof a.slot.getSlotId().getDomId!="undefined"){hearstUpdateSlotRenderInfo(a.slot,a.slot.getSlotId().getDomId(),a.lineItemId,a.creativeId,a.isEmpty,a.size)
+}}});
+aps.fireEvent(aps.event.on_update_page_level_targeting);
+aps.logInfo("defining tags ended : enabling google services");
+aps.fireEvent(aps.event.on_before_enable_google_services);
+if(aps.page.singleRequestMode){aps.logWarning("using Single Request Mode");
+googletag.enableSingleRequest()
+}googletag.enableServices()
+};
+aps.createAdSlot=function(a,d){var e;
+var c=false;
+a.oldDivID=a.code;
+a.newDivID=a.code;
+var b=aps.getAdSize(a);
+if(a.oop){e=googletag.defineOutOfPageSlot("/"+d.networkCode+"/"+d.adUnit,a.code)
+}else{e=googletag.defineSlot("/"+d.networkCode+"/"+d.adUnit,b,a.code)
+}aps.adSlots.push(e);
+aps.slotsByDivID[a.newDivID]=e;
+a.adSizeDefined=b;
+if(APSResponsiveDesign==true&&!aps.isIFrameDynamicPage){aps.setupResponsiveMappings(e,a)
+}e.addService(googletag.pubads());
+setDFPSlotTargeting(a,e,false);
+if(aps.isIFrameDynamicPage){var f=top.aps.getAdDefinitionByCode(a.code);
+if(f.trackScrollPosition){e.setTargeting("scroll_position",f.renderCount);
+f.renderCount++
+}aps.fireEvent(aps.event.on_set_dynamic_ad_targeting,{slot:e,adDefinition:a})
+}};
+aps.getAdSize=function(a){var f=[a.width,a.height];
+if(APSResponsiveDesign==true&&aps.isIFrameDynamicPage){var b=aps.generateSizeMappings(a);
+var e=0;
+for(var d=0;
+d<b.length;
+d++){var c=b[d][0][0];
+if(c<=top.aps.viewportWidth){if(c>e){f=b[d][1];
+e=c
+}}}}return f
+};
+function hearstUpdateSlotRenderInfo(n,o,i,c,f,b){var a=aps.getAdDefinitionByCode(aps.codesByDomID[o]);
+try{a.creativeURL=n.getContentUrl()
+}catch(d){a.creativeURL=""
+}aps.fireEvent(aps.event.on_ad_rendered,{adDefinition:a,newid:o,lineitem:i,size:b,isEmpty:f});
+if(b!=null&&aps.leaderboardLineItemID==null){if(b[0]==300){aps.leaderboardLineItemID=i;
+if(aps.isIFrameDynamicPage){if(top.aps.leaderboardLineItemID==null){top.aps.leaderboardLineItemID=i
+}}}}if(b!=null&&aps.isIFrameDynamicPage){var p=top.aps.getAdDefinitionByCode(a.code);
+var g=window.frameElement;
+g.style.width=b[0]+"px";
+g.style.height=b[1]+"px";
+if((p.interstitial||p.refreshable)&&p.reshJuiceAd==null){p.refreshJuiceAd=function(){setTimeout(function(){aps.refreshAsynchronusChildPage()
+},0)
+}
+}p.creativeURL=a.creativeURL;
+p.adSizeDefined=a.adSizeDefined;
+top.aps.renderInfo[p.newDivID]={lineItem:i,creative:c,isEmpty:f,size:b};
+var m=p.oldDivID;
+var l=p.newDivID;
+var k=a.oldDivID;
+var j=a.newDivID;
+var q=(b!=null)?b[0]:0;
+var h=(b!=null)?b[1]:0;
+top.aps.pageKVPsByDomID[l]=aps.pageKVPsByDomID[j];
+setTimeout(function(){aps.fireEvent(aps.event.on_dynamic_ad_rendered,{oldid:k,newid:j,cx:q,cy:h});
+top.onJuiceEvent_DynamicAdRendered&&top.onJuiceEvent_DynamicAdRendered(m,l,q,h)
+},5);
+return
+}aps.renderInfo[o]={lineItem:i,creative:c,isEmpty:f,size:b};
+if(a.isDynamic==true){var m=a.oldDivID;
+var l=a.newDivID;
+var q=(b!=null)?b[0]:0;
+var h=(b!=null)?b[1]:0;
+setTimeout(function(){aps.fireEvent(aps.event.on_dynamic_ad_rendered,{oldid:m,newid:l,cx:q,cy:h});
+window.onJuiceEvent_DynamicAdRendered&&window.onJuiceEvent_DynamicAdRendered(m,l,q,h)
+},5)
+}}aps.refreshAsynchronusChildPage=function(){aps.logInfo("hearstRefreshAds");
+top.aps.updatePageLevelKVPS(aps.gcontext);
+aps.fireEvent(aps.event.on_update_page_level_targeting);
+googletag.cmd.push(function(){aps.fireEvent(aps.event.on_before_refresh_ad,{slot:aps.adSlots[0]});
+googletag.pubads().refresh(aps.adSlots)
+})
+};
+function hearstPlaceAd(){var b=arguments[0];
+var c=(arguments.length==2)?arguments[1]:null;
+var a=aps.getAdDefinitionByCode(b);
+if(typeof(a)=="undefined"){aps.logWarning("hearstPlaceAd called with non-defined ad slot "+b+" : ignoring ");
+return
+}aps.waitForScriptsToLoad();
+if(!aps.isIFrameDynamicPage){if(!a.interstitial&&!a.rm){if(c!=null){hearstPlaceDynamicAd(b,c);
+a.trackScrollPosition=false;
+aps.logInfo("hearstPlaceAd calling hearstPlaceDynamicAd "+b+" divid "+c);
+return
+}else{aps.logInfo("hearstPlaceAd creating refreshable hearstPlaceDynamicAd "+b);
+aps.refreshableSlots.push(b);
+a.refreshable=true;
+a.refreshJuiceAd=null;
+a.trackScrollPosition=false;
+hearstPlaceDynamicAd(b,b);
+return
+}}}if(!aps.isDivIDUniqueForAdPlacement("hearstPlaceAd",b)){return
+}aps.logInfo("hearstPlaceAd "+b);
+aps.callsByDomID[b]=0;
+aps.MarkDivIDAsUnique(b);
+if(a.interstitial&&!aps.isIFrameDynamicPage){return
+}try{if(aps.useAsynchronus){googletag.cmd.push(function(){aps.initialUpdatePageLevelKVPS(aps.gcontext);
+aps.logPageKVPsforDiv(b);
+aps.fireEvent(aps.event.on_before_display_ad,{adDefinition:a,slot:aps.slotsByDivID[a.newDivID]});
+googletag.display(b)
+})
+}else{aps.initialUpdatePageLevelKVPS(aps.gcontext);
+aps.logPageKVPsforDiv(b);
+aps.fireEvent(aps.event.on_before_display_ad,{adDefinition:a,slot:aps.slotsByDivID[a.newDivID]});
+googletag.display(b)
+}}catch(d){aps.logException("hearstPlaceAd exception for "+b,d)
+}}function hearstRefreshAds(){for(var b=0;
+b<aps.refreshableSlots.length;
+b++){var a=aps.getAdDefinitionByCode(aps.refreshableSlots[b]);
+if(a.refreshJuiceAd!=null){a.refreshJuiceAd()
+}}aps.logInfo("refreshing ad slots "+aps.refreshableSlots.join(", "));
+return true
+}function hearstRefreshInterstitialAds(a){for(var c=0;
+c<a.length;
+c++){var b=aps.interstitialAdDefs[a[c]];
+if(typeof(b)=="undefined"){aps.logWarning("hearstRefreshInterstitialAds called with "+a[c]+", which is not an interstitial ad");
+continue
+}aps.logInfo("hearstRefreshInterstitial "+b.code);
+if(b.refreshJuiceAd==null){if(typeof(b.hearstPlaceDynamicAdCalled)=="undefined"){aps.logInfo("( juice is about to call hearstPlaceDynamicAd) : "+b.code);
+aps.MarkDivIDAsUnique(b.code,"passthrough");
+hearstPlaceDynamicAd(b.code,b.code);
+b.hearstPlaceDynamicAdCalled=true;
+continue
+}}b.refreshJuiceAd()
+}}function hearstPlaceDynamicAd(){if(aps.isIFrameDynamicPage){return
+}aps.waitForScriptsToLoad();
+var b=arguments[0];
+var d=(arguments.length>=2)?arguments[1]:null;
+var a=aps.getAdDefinitionByCode(b);
+if(typeof(a)=="undefined"){aps.logWarning("hearstPlaceDynamicAd called with non-defined ad slot "+b+" : ignoring ");
+return
+}if(arguments.length==1){d=aps.getNextDynamicAdDivID(b);
+a.oldDivID=b;
+a.newDivID=d;
+document.getElementById(b).id=d;
+aps.callsByDomID[a.newDivID]=1;
+aps.logInfo("hearstPlaceDynamicAd called with one parameter "+b+" : new dom id "+d)
+}else{if(!aps.isDivIDUniqueForAdPlacement("hearstPlaceDynamicAd",d)){return
+}if(document.getElementById(arguments[1])==null){var c=(arguments.length==3)?arguments[2]:0;
+d=arguments[1];
+if(c<10){c++;
+setTimeout(function(){aps.logWarning("Div "+b+" did not exist - retrying : "+c);
+hearstPlaceDynamicAd(b,d,c)
+},100)
+}return
+}a.oldDivID=d;
+a.newDivID=d;
+aps.callsByDomID[a.newDivID]=2
+}aps.logInfo("hearstPlaceDynamicAd "+b+"into a div id of "+a.newDivID);
+aps.MarkDivIDAsUnique(a.newDivID,a.code);
+a.isDynamic=true;
+aps.generateDynamicIFrame(a.code,a.newDivID)
+}aps.getNextDynamicIFrameID=function(a){return a+"-"+aps.divIDPostfix+"-1fr4m3-"+aps.childIFrames.length
+};
+aps.generateDynamicIFrame=function(e,d){var c=document.createElement("iframe");
+if(aps.viewportWidth==null){aps.viewportWidth=Math.max(document.documentElement.clientWidth,window.innerWidth||0);
+aps.logInfo("viewport width detected "+aps.viewportWidth)
+}c.id=aps.getNextDynamicIFrameID(e);
+c.name=c.id;
+c.style.width="0px";
+c.style.height="0px";
+c.style.border="none";
+c.style.backgroundColor="transparent";
+c.allowTransparency="true";
+c.style.verticalAlign="bottom";
+c.width=aps.viewportWidth;
+c.height="250";
+c.scrolling="no";
+c.marginwidth="0";
+c.marginheight="0";
+if(typeof(aps.juice_files)=="undefined"){var a=location.hostname.split(".").slice(-2).join(".");
+var g=document.getElementById("AdsConfigJavaScript").src;
+var f="https:"==document.location.protocol?"https:":"http:";
+if(g.indexOf("staging")>1){aps.juice_files=f+"//juice-files-staging."+a+"/html/juiceframe"
+}else{aps.juice_files=f+"//juice-files."+a+"/html/juiceframe"
+}if(f=="https:"){aps.logError("This page is trying to serve dynamic or interstitial ads on a secure page.  This is not supported unless a proper certificate has been setup for juice-files.thedomain.com on the juice server.")
+}aps.childScriptLoader=loadAd_UrlLocation+"SRO/GetJSCF?generationID="+escape(aps.scriptHash)+"&url="+escape(JuicePageUrl)
+}var b=aps.juice_files+"?";
+b+="generationID="+encodeURIComponent(aps.scriptHash);
+b+="&dm="+encodeURIComponent(document.domain);
+b+="&slt="+encodeURIComponent(e);
+aps.childIFramesByContainer[d]=c;
+var h=document.getElementById(d);
+h.appendChild(c);
+aps.childIFrames.push(c.id);
+c.src=b
+};
+aps.contentLoaded(window,aps.domLoaded);
+aps.topWindow=(aps.scriptName=="googleAsync")?window:top;
+aps.topAps=aps.topWindow.aps;
+aps.initialUpdatePageLevelKVPS=function(a){if(!aps.hearstPlaceAdHasUpdatedKVPS){aps.hearstPlaceAdHasUpdatedKVPS=true;
+aps.logInfo("calling updatePageLevelKVPS from hpa");
+aps.topAps.updatePageLevelKVPS(a)
+}};
+aps.getCookie=function(d){var f=d+"=";
+var b=document.cookie.split(";");
+for(var e=0;
+e<b.length;
+e++){var a=b[e];
+while(a.charAt(0)==" "){a=a.substring(1)
+}if(a.indexOf(f)==0){return a.substring(f.length,a.length)
+}}return""
+};
+aps.waitForScriptsToLoad=function(){};
+aps.unQueueCommands=function(){};
+aps.scriptLoaderStarted=false;
+aps.requiredGPTScriptCount=aps.requiredGPTScriptCount||0;
+aps.loadAsyncScripts=function(){if(aps.topWindow!=self){return
+}aps.logInfo("loadingAsyncScripts: "+aps.queuedScriptCount);
+for(var a in aps.adScripts){if(aps.adScripts.hasOwnProperty(a)){aps.queueAsyncScript(aps.adScripts[a])
+}}aps.scriptLoaderStarted=true;
+aps.testAsyncWaitFunctions();
+aps.initializeScriptLoadChecking()
+};
+aps.queueAsyncScript=function(a){a.loadstart=new Date();
+if(a.testFunction!=null){return
+}var b=a;
+a.callback=function(){if(!b.complete){b.loadend=new Date();
+b.complete=true;
+aps.logInfo(b.name+" loaded  : "+(b.loadend-b.loadstart));
+aps.fireEvent(aps.event.on_script_loaded,{scriptDetails:b})
+}};
+aps._loadScript2(a)
+};
+aps.testAsyncWaitFunctions=function(){for(var b in aps.adScripts){if(aps.adScripts.hasOwnProperty(b)){if(aps.adScripts[b].testFunction!=null&&aps.adScripts[b].complete==false){if(aps.adScripts[b].testFunction()===true){var a=aps.adScripts[b];
+a.loadend=new Date();
+a.complete=true;
+aps.logInfo(a.name+" loaded  : "+(a.loadend-a.loadstart));
+aps.fireEvent(aps.event.on_script_loaded,{scriptDetails:aps.adScripts[b]})
+}}}}};
+aps._testAsyncStatus=function(){var a=aps.adScripts;
+aps.testAsyncWaitFunctions();
+var c=0;
+for(var b in aps.adScripts){if(aps.adScripts.hasOwnProperty(b)){if(aps.adScripts[b].complete&&aps.adScripts[b].requiredForGPT){c++
+}}}if(c==aps.requiredGPTScriptCount){aps.adScriptsLoaded=true
+}return aps.adScriptsLoaded
+};
+aps.initializeScriptLoadChecking=function(){var c=this;
+var b=0;
+var a=aps.adScripts;
+aps.adScriptsLoaded=false;
+aps.logInfo("initializeScriptLoadChecking");
+c.loadCheck=setInterval(function(){if(b>50){if(b>50){aps.logError("ScriptLoadChecking timed out waiting for a script")
+}aps.adScriptsLoaded=true
+}else{aps._testAsyncStatus()
+}if(aps.adScriptsLoaded==true){window.clearInterval(c.loadCheck);
+aps.logInfo("ScriptLoadChecking complete : "+b+" iterations");
+aps.unQueueCommands()
+}b++
+},50)
+};
+aps.queueScriptAsync=function(d,e,c,a){var b={name:d,scriptID:null,path:e,testFunction:null,complete:false,loadstart:null,loadend:null,appCallback:a,requiredForGPT:c};
+aps.adScripts[d]=b;
+aps.queuedScriptCount++;
+if(c){aps.requiredGPTScriptCount++
+}if(aps.scriptLoaderStarted){aps.queueAsyncScript(b)
+}return b
+};
+aps.queueScriptAsyncID=function(e,c,f,d,a){var b={name:e,scriptID:c,path:f,testFunction:null,complete:false,loadstart:null,loadend:null,appCallback:a,requiredForGPT:d};
+aps.adScripts[e]=b;
+aps.queuedScriptCount++;
+if(d){aps.requiredGPTScriptCount++
+}if(aps.scriptLoaderStarted){aps.queueAsyncScript(b)
+}return b
+};
+aps.queueWaitFunction=function(b,c){var a={name:b,scriptID:null,path:null,testFunction:c,complete:false,loadstart:null,loadend:null,appCallback:null,requiredForGPT:true};
+aps.adScripts[b]=a;
+aps.queuedScriptCount++;
+aps.requiredGPTScriptCount++;
+if(aps.scriptLoaderStarted){aps.queueAsyncScript(a)
+}return a
+};
+aps._loadScript2=function(a){var c=a.path;
+if(!c||!(typeof c==="string")){return
+}var b=document.createElement("script");
+b.type="text/javascript";
+b.async=true;
+if(a.scriptID!=null){b.id=a.scriptID
+}if(b.addEventListener){b.addEventListener("load",function(){try{a.callback.apply(a)
+}catch(d){aps.logException("_loadScript2",d)
+}if(a.appCallback!=null){a.appCallback.apply(a)
+}},false)
+}else{b.onreadystatechange=function(){if(b.readyState in {loaded:1,complete:1}){b.onreadystatechange=null;
+console.log(oCallback);
+try{a.callback.apply(a)
+}catch(d){aps.logException("_loadScript2",d)
+}if(a.appCallback!=null){a.appCallback.apply(a)
+}}}
+}b.src=c;
+document.getElementsByTagName("head")[0].appendChild(b)
+};
+if(aps.scriptName=="googleAsync"){aps.cmd=[];
+aps.unQueueCommands=function(){for(var a=0;
+a<aps.cmd.length;
+a++){googletag.cmd.push(aps.cmd[a])
+}aps.cmd=googletag.cmd
+};
+window.hearstPlaceDynamicAd=function(){var b=arguments[0],d;
+var a=aps.getAdDefinitionByCode(b);
+if(typeof(a)=="undefined"){aps.logWarning("hearstPlaceDynamicAd called with non-defined ad slot "+b+" : ignoring ");
+return
+}if(arguments.length==1){d=aps.getNextDynamicAdDivID(b);
+a.oldDivID=b;
+a.newDivID=d;
+document.getElementById(b).id=d;
+aps.callsByDomID[a.newDivID]=1;
+aps.logInfo("hearstPlaceDynamicAd called with one parameter "+b+" : new dom id "+d)
+}else{d=arguments[1];
+if(!aps.isDivIDUniqueForAdPlacement("hearstPlaceDynamicAd",d)){return
+}if(document.getElementById(arguments[1])==null){var c=(arguments.length==3)?arguments[2]:0;
+d=arguments[1];
+if(c<10){c++;
+setTimeout(function(){aps.logWarning("Div "+b+" did not exist - retrying : "+c);
+hearstPlaceDynamicAd(b,d,c)
+},100)
+}return
+}a.oldDivID=d;
+a.newDivID=d;
+aps.callsByDomID[a.newDivID]=2
+}aps.logInfo("hearstPlaceDynamicAd "+b+"into a div id of "+a.newDivID);
+aps.MarkDivIDAsUnique(a.newDivID,a.code);
+a.isDynamic=true;
+aps.cmd.push(function(){aps.waitForScriptsToLoad();
+var e=definedTags;
+var f=googletag.defineSlot("/"+e.networkCode+"/"+e.adUnit,[a.width,a.height],a.newDivID);
+aps.setupResponsiveMappings(f,a);
+f.addService(googletag.pubads());
+setDFPSlotTargeting(a,f,false);
+aps.fireEvent(aps.event.on_update_page_level_targeting);
+f.setTargeting("scroll_position",a.renderCount);
+aps.slotsByDivID[a.newDivID]=f;
+a.renderCount++;
+aps.fireEvent(aps.event.on_set_dynamic_ad_targeting,{slot:f,adDefinition:a});
+aps.dynamicSlots.push(f);
+aps.logPageKVPsforDiv(a.newDivID);
+aps.fireEvent(aps.event.on_before_display_ad,{adDefinition:a,slot:aps.slotsByDivID[a.newDivID]});
+googletag.display(a.newDivID);
+googletag.pubads().refresh([f])
+})
+};
+window.hearstPlaceAd=function(){var b=arguments[0];
+var d=false;
+var a=aps.getAdDefinitionByCode(b);
+divID=(arguments.length==2)?arguments[1]:null;
+if(typeof(a)=="undefined"){aps.logInfo("hearstPlaceAd called with non-defined ad slot "+b+" : ignoring ");
+return
+}if(!a.interstitial&&!a.rm){if(divID!=null){aps.logInfo("hearstPlaceAd calling hearstPlaceDynamicAd "+b+" divid "+divID);
+hearstPlaceDynamicAd(b,divID);
+return
+}else{d=true
+}}if(!aps.isDivIDUniqueForAdPlacement("hearstPlaceAd",b)){return
+}aps.logInfo("hearstPlaceAd "+b);
+aps.MarkDivIDAsUnique(b);
+aps.callsByDomID[b]=0;
+if(d){aps.refreshableSlots.push(b)
+}try{aps.cmd.push(function(){aps.waitForScriptsToLoad();
+aps.initialUpdatePageLevelKVPS(aps.gcontext);
+aps.logPageKVPsforDiv(b);
+aps.fireEvent(aps.event.on_before_display_ad,{adDefinition:a,slot:aps.slotsByDivID[a.newDivID]});
+googletag.display(b)
+})
+}catch(c){aps.logException("hearstPlaceAd exception for "+b,c)
+}}
+}(function(){if(typeof(aps.topAps.top_prev_line_item_id)=="undefined"){aps.topAps.top_prev_line_item_id=null
+}aps.registerEvent(aps.event.on_ad_rendered,function(a){if(aps.topAps.top_prev_line_item_id==null&&!a.isEmpty){if(a.size[0]==300){aps.topAps.top_prev_line_item_id=a.lineitemId
+}}});
+aps.registerEvent(aps.event.on_set_dynamic_ad_targeting,function(a){if(aps.topAps.top_prev_line_item_id!=null){a.slot.setTargeting("prev_line_item",aps.topAps.top_prev_line_item_id)
+}})
+})();
+(function(){if(typeof(aps.topAps.top_roadblock_line_item_id)=="undefined"){aps.topAps.top_roadblock_line_item_id=null
+}aps.registerEvent(aps.event.on_ad_rendered,function(a){if(aps.topAps.top_roadblock_line_item_id==null&&a.isEmpty==false&&a.lineitem!=null&&a.adDefinition.code=="A728"){aps.topAps.top_roadblock_line_item_id=a.lineitem;
+for(var c=0;
+c<aps.topAps.adSlots.length;
+c++){try{aps.topAps.adSlots[c].setTargeting("roadblock",aps.topAps.top_roadblock_line_item_id)
+}catch(b){}}}});
+aps.registerEvent(aps.event.on_set_dynamic_ad_targeting,function(a){if(top.aps.top_roadblock_line_item_id!=null){a.slot.setTargeting("roadblock",top.aps.top_roadblock_line_item_id)
+}})
+})();
+(function(){var a=this;
+a.getAutoKVPPageURL=function(c){c=c.replace(new RegExp(/\/$/),"");
+var b=c.indexOf("//");
+var e=c.lastIndexOf("/");
+var d=c.lastIndexOf(".");
+if((e>b+2)&&(d>e)){c=c.substring(0,e)
+}return c
+};
+aps.registerEvent(aps.event.on_update_page_level_targeting,function(b){aps.gcontext.pubads().setTargeting("PageUrl",a.getAutoKVPPageURL(JuicePageUrl))
+})
+})();
+(function(){var a=this;
+a.aps=aps;
+a.refreshed=[];
+a.codeFromSlot=function(c){for(var b in aps.slotsByDivID){if(aps.slotsByDivID.hasOwnProperty(b)){if(aps.slotsByDivID[b]==c){return aps.codesByDomID[b]
+}}}return"undefined"
+};
+a.setSlotTargeting=function(h,b){var f="undefined";
+var g=(typeof(a.refreshed[b])=="undefined")?"":"_R";
+var d="";
+try{f=a.getOmniContentType()
+}catch(c){}if(typeof(aps.topWindow.omni_SSVariant)!="undefined"){d="_"+aps.topWindow.omni_SSVariant
+}h.setTargeting("page_type2",f);
+h.setTargeting("DIV_ID",b);
+h.setTargeting("page_type3",b+"_"+f+d+g);
+a.refreshed[b]=true
+};
+aps.registerEvent(aps.event.on_before_display_ad,function(c){if(aps.isIFrameDynamicPage&&aps.scriptName=="googleSync"){a.setSlotTargeting(aps.adSlots[0],a.codeFromSlot(aps.adSlots[0]))
+}else{var b=c.adDefinition;
+var d=c.slot;
+a.setSlotTargeting(d,b.code)
+}});
+aps.registerEvent(aps.event.on_before_refresh_ad,function(b){a.setSlotTargeting(b.slot,a.codeFromSlot(b.slot))
+});
+a.getOmniContentType=function(){if(typeof(aps.topWindow.s)!="undefined"){if(typeof(aps.topWindow.s.prop24)!="undefined"){return aps.topWindow.s.prop24
+}}if(typeof(aps.topWindow.ess)!="undefined"){if(typeof(aps.topWindow.ess.prop24)!="undefined"){return aps.topWindow.ess.prop24
+}}if(typeof(top.aps.awOmniContentType)=="undefined"){if(typeof(top.omni_blogname)!="undefined"){top.aps.awOmniContentType=a._getBlogOmniType()
+}else{top.aps.awOmniContentType=a._getWCMOmniContentType()
+}}return top.aps.awOmniContentType
+};
+a.getQueryParam=function(b){b=b.replace(/[\[]/,"\\[").replace(/[\]]/,"\\]");
+var c=new RegExp("[\\?&]"+b+"=([^&#]*)"),d=c.exec(top.location.search);
+return d==null?"":decodeURIComponent(d[1].replace(/\+/g," "))
+};
+a._getWCMOmniContentType=function(){if(window.location.href.indexOf("cmfThirdParty")<0){a.awOmniPagename="";
+a.awOmniPagetitle="";
+a.awOmniChannel;
+a.awOmniHier1;
+a.awOmniServer=top.document.location.host;
+a.awOmniSSL1;
+a.awOmniSSL2;
+a.awOmniSSL3;
+a.awOmniSSL4;
+a.awOmniNumResults;
+a.awOmniSearchTerms;
+a.awOmniPrintContent="online";
+a.awOmniAuthorTitle="";
+a.awOmniPubDate;
+a.awOmniTitle="";
+a.awOmniID="";
+a.awOmniContentType="";
+a.awOmniAuthor="";
+a.awOmniDaysSincePub;
+a.awOmniQuery="";
+a.awOmniDomain;
+a.awOmniHeadline="";
+a.awOmniPageNumber="";
+a.awOmniPremiumStatus="";
+a.awOmniPremiumAuthStatus="";
+a.awOmniPremiumEndDate="";
+a.awOmniPubSource="";
+a.awOmniBoolPremiumEvent=false;
+a.awOmniFullURL=top.document.URL.toLowerCase();
+a.awStrRelativePath;
+a.awStrPageURL="";
+a.awStrChannelPath;
+a.awStrPageFile;
+a.awStrVertical;
+a.awControllerName=getQueryParam("controllerName").toLowerCase();
+a.awStrGAAcct2="";
+a.awBoolIs404=false;
+a.awGetDomainName=function(e){var d=e.match(/:\/\/(.[^/]+)/)[1].replace("www.","").split(".");
+return d[0]
+};
+a.awParseURL=function(){var i=awOmniFullURL;
+var h;
+var e;
+var f=i.indexOf("?")+1;
+var g=i.indexOf(".com")+5;
+var d=new Array;
+awOmniDomain=i.substr(0,g);
+if(f>0){awOmniQuery=i.substring(f);
+awStrRelativePath=i.substring(0,f-1)
+}else{awStrRelativePath=i
+}awStrPageURL=awStrRelativePath;
+awStrRelativePath=awStrRelativePath.substr(g);
+if(typeof a.s_mainDomain=="undefined"){if(location.hostname.split(".").length>2){a.s_mainDomain=top.location.protocol+"//www."+location.hostname.split(".")[1]+"."+location.hostname.split(".")[2]+"/"
+}else{a.s_mainDomain=top.location.protocol+"//"+top.location.hostname+"/"
+}}h=awGetDomainName(awOmniDomain);
+if(h!==awGetDomainName(s_mainDomain)){awStrRelativePath=h+"/"+awStrRelativePath
+}e=awStrRelativePath.indexOf(".")==-1;
+if(e){if(h!=="29-95"||awStrRelativePath.indexOf("/comic/")==-1&&awStrRelativePath.indexOf("/story/")==-1&&awStrRelativePath.indexOf("/photo/")==-1){if(awStrRelativePath.charAt(awStrRelativePath.length-1)!=="/"){awStrRelativePath+="/"
+}if(awOmniDomain==s_mainDomain&&(awStrRelativePath=="home/"||awStrRelativePath.length==1)){awStrRelativePath="home"
+}else{awStrRelativePath+="index"
+}}}d=awStrRelativePath.split("/");
+awStrChannelPath=d[0];
+if(awStrChannelPath.indexOf(".")!==-1){awStrChannelPath="home"
+}for(z=0;
+z<d.length;
+z++){if(awOmniPagename!=""){awOmniPagename=awOmniPagename+":"+d[z];
+if(z<d.length-1){awStrChannelPath=awStrChannelPath+" :: "+d[z]
+}}else{awOmniPagename=d[z]
+}}awStrPageFile=d[d.length-1];
+if(awStrPageFile=="index"&&d.length>1){awStrPageFile=d[d.length-2]+":"+awStrPageFile
+}awOmniPagename=awOmniPagename=="home"?"HomePage":awOmniPagename;
+awOmniPagetitle=awOmniPagename=="HomePage"?"HomePage":awStrPageFile;
+return awOmniPagename
+};
+a.omni_categorize=function(g){if(typeof g!="undefined"){var f,e;
+var d=new Array;
+g=g.toLowerCase();
+d=g.split(" :: ");
+e=d.length;
+awOmniSSL1=awOmniChannel=awOmniSSL2=awOmniSSL3=awOmniSSL4=d[0];
+if(e>1){awOmniSSL2=awOmniSSL3=awOmniSSL4=awOmniSSL1+":"+d[1]
+}if(e>2){awOmniSSL3=awOmniSSL4=awOmniSSL2+":"+d[2]
+}if(e>3){awOmniSSL4=awOmniSSL3+":"+d[3]
+}awOmniHier1=awOmniSSL4.replace(/:/g,",");
+if(e>4){for(f=4;
+f<e;
+f++){awOmniSSL4=awOmniSSL4+" - "+d[f]
+}}}};
+a.toProperCase=function(d){if(d!="undefined"){if(d.length>1){return d.toLowerCase().replace(/^(.)|\s(.)/g,function(e){return e.toUpperCase()
+})
+}}};
+a.processByLine=function(e){var d=e;
+if(d.length>2){if(d.substr(0,3).toUpperCase()=="BY "){d=d.substr(3)
+}}return toProperCase(d)
+};
+a.linkTrack=function(g,d,e){try{s_hdn.linkTrackVars="campaign";
+s_hdn.campaign=d;
+if(typeof e=="undefined"){s_hdn.tl(g,"o")
+}else{s_hdn.tl(g,"o",e)
+}}catch(f){if(a.console!=undefined){console.log(f)
+}}};
+awParseURL();
+if(typeof omni_bizObjectId!="undefined"){awOmniID=omni_bizObjectId
+}if(typeof omni_authorName!="undefined"){awOmniAuthor=processByLine(omni_authorName)
+}if(typeof omni_authorTitle!="undefined"){awOmniAuthorTitle=omni_authorTitle.toLowerCase().indexOf("associated press")>-1?"AP":omni_authorTitle
+}if(typeof omni_publicationDate!="undefined"){awOmniPubDate=omni_publicationDate;
+var c=new Date;
+var b=new Date(awOmniPubDate.replace(/-/g,"/"));
+awOmniDaysSincePub=Math.ceil((c.getTime()-b.getTime())/(1000*60*60*24))
+}if(typeof omni_title!="undefined"){awOmniTitle=omni_title
+}else{if(typeof omni_blogposttitle!="undefined"){awOmniTitle=omni_blogposttitle
+}else{if(awOmniPagetitle.length>0){awOmniTitle=awOmniPagetitle
+}}}if(typeof omni_breakingNewsFlag!="undefined"&&typeof omni_localNewsFlag!="undefined"){if(omni_breakingNewsFlag!="1"&&omni_localNewsFlag=="1"){awOmniPrintContent="print"
+}}if(typeof omni_channelPath!="undefined"){awStrChannelPath=omni_channelPath.toLowerCase();
+if(awStrChannelPath=="local :: sound publishing"){awStrGAAcct2="UA-52608-55"
+}}if(typeof omni_className!="undefined"){awOmniContentType=omni_className
+}else{if(awControllerName.length>0){awOmniContentType=awControllerName
+}else{if(awOmniTitle.toLowerCase()=="page not found"){awOmniContentType="page not found"
+}else{if(awOmniQuery.substring(0,2)=="s\x3d"){awOmniContentType="search"
+}}}}if(typeof omni_premiumStatus!="undefined"){awOmniPremiumStatus=omni_premiumStatus;
+awOmniBoolPremiumEvent=true
+}if(typeof omni_premiumEndDate!="undefined"){awOmniPremiumEndDate=omni_premiumEndDate
+}if(typeof omni_sourceSite!="undefined"){awOmniPubSource=omni_sourceSite
+}if(typeof omni_paywallSite!="undefined"){awOmniPremiumAuthStatus="Logged Out";
+if(typeof edbTokens!=="undefined"&&edbTokens.productToken!==null){awOmniPremiumAuthStatus="Logged In"
+}}switch(awOmniContentType){case"article":if(awOmniFullURL.toLowerCase().indexOf("articlegallery")!==-1){awOmniPageNumber="article slideshow photo:1";
+awOmniContentType="article slideshow"
+}awOmniHeadline=awOmniTitle+(awOmniAuthorTitle.length>0?" - "+awOmniAuthorTitle:"");
+break;
+case"slideshow":awStrChannelPath=awStrChannelPath.length>0?awStrChannelPath+" :: "+awOmniContentType:awOmniContentType;
+break;
+case"collection":awStrChannelPath=awStrChannelPath.length>0?awStrChannelPath+" :: "+awOmniContentType:awOmniContentType;
+break;
+case"search":awOmniNumResults=0;
+awOmniSearchTerms=Bootstrapper.getQueryParam("query");
+if(!awOmniSearchTerms){awOmniSearchTerms=Bootstrapper.getQueryParam("s")
+}if(awOmniSearchTerms){awOmniSearchTerms="searchbox:kwd:"+awOmniSearchTerms
+}awStrChannelPath="search";
+if(Bootstrapper.getQueryParam("channel").length>1){awStrChannelPath+=" :: "+(Bootstrapper.getQueryParam("inlineLink")=="1"?"inline":"searchbox")+" :: "+Bootstrapper.getQueryParam("channel")
+}break;
+case"video":awStrChannelPath=awStrChannelPath.length>0?awStrChannelPath+" :: "+awOmniContentType:awOmniContentType;
+break;
+case"page not found":awOmniDaysSincePub="";
+awBoolIs404=true;
+break;
+case"channel":awOmniDaysSincePub="";
+if(awOmniPagename=="HomePage"){awOmniContentType="home page"
+}break;
+default:awOmniContentType="other"
+}return awOmniContentType
+}else{return"undefined"
+}};
+a._getBlogOmniType=function(){var o;
+var h;
+var m;
+var q=document.location.host;
+var r;
+var s;
+var t;
+var u;
+var g;
+var v="";
+var n="";
+var i="Blogs";
+var d="";
+var p="";
+var j;
+var f="";
+var l="";
+var k=document.URL.toLowerCase();
+var e="";
+var b=new Object;
+b.SuperCategory="";
+b.Category="";
+b.AuthorType="reader";
+b.Usage="blog";
+b.Section="";
+b.Voice="";
+var A;
+var y="";
+var w;
+var x;
+var c=false;
+this.toProperCase=function B(C){if(C!="undefined"){if(C.length>1){return C.toLowerCase().replace(/^(.)|\s(.)/g,function(D){return D.toUpperCase()
+})
+}}};
+if(typeof(omni_blogID)!="undefined"){n=omni_blogID
+}if(typeof(omni_blogauthor)!="undefined"){d=B(omni_blogauthor)
+}if(typeof(omni_blogauthortype)!="undefined"){b.AuthorType=omni_blogauthortype
+}if(typeof(omni_blogposttitle)!="undefined"){c=(omni_blogposttitle.toLowerCase()=="page not found");
+v=omni_blogposttitle;
+if(v.charAt(v.length-1)==" "){v=v.substr(0,v.length-1)
+}}if(typeof(omni_blogname)!="undefined"){f=omni_blogname
+}if(typeof(omni_blogcategory2)!="undefined"){b.Category=omni_blogcategory2
+}if(b.Category.length>0){if(typeof(omni_blogcategory)!="undefined"){b.SuperCategory=omni_blogcategory
+}}else{if(typeof(omni_blogcategory)!="undefined"){b.Category=omni_blogcategory
+}}if(typeof(omni_blogusage)!="undefined"){b.Usage=omni_blogusage
+}if(typeof(omni_section)!="undefined"){b.Section=omni_section
+}if(typeof(omni_voices)!="undefined"){b.Voice=omni_voices
+}this.abParseURL=function(){var F=k;
+if(F.indexOf("#")>-1){F=F.split("#")[0]
+}var D=F.indexOf("?")+1;
+var E=F.indexOf(".com")+5;
+j=F.substr(0,E);
+if(D>0){p=F.substring(D);
+A=F.substring(0,D-1)
+}else{A=F
+}y=A;
+A=A.substr(E);
+if(A.charAt(A.length-1)=="/"){A=A.substr(0,A.length-1)
+}var C=new Array();
+C=A.split("/");
+w=C[0];
+x=C[C.length-1];
+if(w==x){x="index"
+}if(top.document.location.hostname=="insidescoopsf.sfgate.com"){w="insidescoop"
+}return w+":"+x
+};
+this.abAssignSections=function(){if(b.SuperCategory.length>0){h=b.SuperCategory;
+r=b.SuperCategory;
+s=r+":"+b.Category;
+t=s+":blogs";
+u=t+":"+f.toLowerCase()
+}else{h=b.Category;
+r=b.Category;
+s=r+":blogs";
+t=s+":"+f.toLowerCase();
+u=t;
+if(b.Voice.length>0){u=u+":"+b.Voice.toLowerCase()
+}}m=u.replace(/:/g,",")
+};
+o="Blogs-"+abParseURL();
+if(b.Category==""){abCategorizeBlog(w,b)
+}abAssignSections();
+if(v==""||v==f){v="Blog index page"
+}if(b.Section.length>0){f=f+":"+b.Section
+}v=f+":"+v;
+n=f+"--"+n;
+g=b.AuthorType;
+f=f+"("+b.AuthorType+")";
+v=v+"("+b.AuthorType+")";
+v=v.replace(/'/g,"");
+l=v;
+if(d){if(d.indexOf(",")!=-1){d=d.substring(0,d.indexOf(","))
+}}if(c){return"undefined"
+}else{return i
+}}
+})();
+(function(){aps.registerEvent(aps.event.on_dom_loaded,function(a){var b=aps.getQueryParameterByName("juiceconsole");
+if(b!=null){setTimeout(function(){var c=document.createElement("script");
+c.src="http://extras.chron.com/Bookmarklets/debug.js"+"?bustcache="+new Date().getTime();
+document.body.appendChild(c)
+},parseInt(b,10))
+}})
+})();
+(function(){var a=this;
+a.amazonSetTargeting=function(c,d,b){var f=c;
+try{if(b){f.targetingKey=b;
+var i=f.getTokens();
+if(typeof i!="undefined"&&i.length>0){d.pubads().setTargeting(b,i)
+}else{aps.logInfo("amznads.getTokens returned empty - no targets set")
+}}else{var g;
+for(g in f.ads){if(f.ads.hasOwnProperty(g)){d.pubads().setTargeting(g,"1")
+}}}aps.logInfo("amznads.setTargeting Completed successfully. Number of ads returned by Amazon:"+Object.keys(f.ads).length);
+if(f.debug_mode){f.log("amznads.setTargetingForGPTSync: Completed successfully. Number of ads returned by Amazon: "+Object.keys(f.ads).length)
+}}catch(h){if(f.debug_mode){f.log("amznads.setTargetingForGPTSync: ERROR - "+h);
+aps.logException("amznads.setTargetingForGPTSync: ERROR -",h)
+}}};
+aps.registerEvent(aps.event.on_update_page_level_targeting,function(c){try{a.amazonSetTargeting(aps.topWindow.amznads,aps.gcontext,"amznslots");
+aps.logInfo("amznads.setTargetingForGPTAsync called")
+}catch(b){aps.logException("amazonSetTargeting",b)
+}})
+})();
+(function(){aps.registerEvent(aps.event.on_update_page_level_targeting,function(a){if(typeof aps.topWindow.pxSegmentIDs!=="undefined"){aps.logInfo("setProximicTags : "+aps.topWindow.pxSegmentIDs);
+aps.gcontext.pubads().setTargeting("prox_other",aps.topWindow.pxSegmentIDs)
+}})
+})();
+(function(){var b=this;
+aps.registerEvent(aps.event.on_update_page_level_targeting,function(e){if(typeof aps.topWindow.crtg_cookie_content!=="undefined"){var c=aps.topWindow.crtg_cookie_content.split(";");
+for(var d=1;
+d<c.length;
+d++){aps.gcontext.pubads().setTargeting(""+(c[d-1].split("="))[0]+"",""+(c[d-1].split("="))[1]+"")
+}}});
+if(aps.topWindow==window){window.crtg_nid="2333";
+window.crtg_cookiename="crtg_hearst";
+window.crtg_varname="crtg_content";
+window.crtg_getCookie=function(d){var e,f,g,c=document.cookie.split(";");
+for(e=0;
+e<c.length;
+e++){f=c[e].substr(0,c[e].indexOf("="));
+g=c[e].substr(c[e].indexOf("=")+1);
+f=f.replace(/^\s+|\s+$/g,"");
+if(f==d){return unescape(g)
+}}return""
+};
+window.crtg_cookie_content=window.crtg_getCookie(window.crtg_cookiename);
+window.crtg_rnd=Math.floor(Math.random()*99999999999);
+var a=location.protocol+"//rtax.criteo.com/delivery/rta/rta.js?netId="+escape(window.crtg_nid);
+a+="&cookieName="+escape(window.crtg_cookiename);
+a+="&rnd="+window.crtg_rnd;
+a+="&varName="+escape(window.crtg_varname);
+aps.logInfo("queueing criteo script");
+aps.queueScriptAsync("criteo_rta",a,true,null)
+}})();
+var definedTags={"networkCode":"36117602","adUnit":"hnp-sfgate.com/Entertainment","kvps":[{"key":"referrer","value":"{document.referrer.replace(/^(http(?:s)?:\\/\\/)/, \u0027\u0027).split(\u0027/\u0027)[0]}"}],"ads":[{"width":300,"height":250,"code":"TMP300_1","kvps":[{"key":"position","value":"BTF"}],"rm":false,"interstitial":false,"oop":false,"sizeMappings":["1280x300x250","1024x300x250","768x300x250","001x300x250"]},{"width":300,"height":250,"code":"TMP300_2","kvps":[{"key":"position","value":"BTF"}],"rm":false,"interstitial":false,"oop":false,"sizeMappings":["1280x300x250","1024x300x250","768x300x250","001x300x250"]},{"width":300,"height":250,"code":"TMP300_3","kvps":[{"key":"position","value":"BTF"}],"rm":false,"interstitial":false,"oop":false,"sizeMappings":["1280x300x250","1024x300x250","768x300x250","001x300x250"]},{"width":728,"height":90,"code":"A728","kvps":[{"key":"position","value":"ATF"}],"rm":false,"interstitial":false,"oop":false,"sizeMappings":["1280x970x90","1024x970x90","768x728x90","0001x728x90"]},{"width":1,"height":1,"code":"RM","kvps":[{"key":"position","value":"ATF"}],"rm":true,"interstitial":false,"oop":false,"sizeMappings":["1280x001x001","1024x001x001","768x001x001","0001x001x001"]},{"width":950,"height":30,"code":"A951","kvps":[{"key":"position","value":"ATF"}],"rm":true,"interstitial":false,"oop":false,"sizeMappings":["1280x970x415","1024x970x415"]},{"width":300,"height":250,"code":"GO300","kvps":[{"key":"page_type","value":"article_slideshow_overlay"},{"key":"position","value":"ATF"}],"rm":false,"interstitial":true,"oop":false,"sizeMappings":["1280x300x250","1024x300x250","768x300x350","0001x300x250"]},{"width":728,"height":90,"code":"B728","kvps":[{"key":"position","value":"BTF"}],"rm":false,"interstitial":false,"oop":false,"sizeMappings":["1280x728x90","1024x468x60","768x468x60","0001x468x60"]},{"width":300,"height":250,"code":"A300","kvps":[{"key":"position","value":"ATF"}],"rm":false,"interstitial":false,"oop":false,"sizeMappings":["1280x300x1050","1024x300x600","768x300x600","0001x300x600"]},{"width":300,"height":250,"code":"B300","kvps":[{"key":"position","value":"BTF"}],"rm":false,"interstitial":false,"oop":false,"sizeMappings":["1280x300x1050","1024x300x600","768x300x600","001x300x600"]},{"width":300,"height":250,"code":"S300","kvps":[{"key":"position","value":"STF"}],"rm":false,"interstitial":false,"oop":false,"sizeMappings":["1280x300x250","1024x300x250","768x300x250","001x300x250"]}],"responsiveMappings":42,"singleRequestMode":false};
+aps.scriptHash="0xE0FAC3329A3587572E198FA2A559FC01C8C50305";var aps=aps||{};aps.juiceMatchedUrl="www.sfgate.com/entertainment/";

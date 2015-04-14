@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8">
+<title>  HTML5 does NOT allow &#8220;self-closing&#8221; tags  &#8226;  Tiffany B. Brown</title>
+
+<link rel="icon" href="http://webinista.s3.amazonaws.com/icon32.png">
+<link rel="stylesheet" href="http://webinista.s3.amazonaws.com/style.20140119.v2.min.css" type="text/css" media="screen">
+<link rel="alternate" type="application/rss+xml" title="Tiffany B. Brown RSS Feed" href="http://tiffanybbrown.com/feed/">
+<link rel="alternate" type="application/atom+xml" title="Tiffany B. Brown Atom Feed" href="http://tiffanybbrown.com/feed/atom/">
+<link rel="pingback" href="http://tiffanybbrown.com/xmlrpc.php">
+<!--[if lte IE 8]>
+<script type="text/javascript">
+/* Retrofits HTML5 tags for <= IE8 */
+(function(){
+    var els = ['header','nav','section','footer','article','figure','menu'];
+    var num = els.length;
+
+    for( var x = 0; x < num; x++){
+        document.createElement(els[x]);
+    }
+})();
+</script>
+<![endif]-->
+<link rel="alternate" type="application/rss+xml" title="Tiffany B. Brown &raquo; HTML5 does NOT allow &#8220;self-closing&#8221; tags Comments Feed" href="http://tiffanybbrown.com/2011/03/23/html5-does-not-allow-self-closing-tags/feed/" />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://tiffanybbrown.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://tiffanybbrown.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='Android 3.0 SDK on Mac OS X &#8211; Snow Leopard: Installation tips' href='http://tiffanybbrown.com/2011/03/22/installing-the-android-3-0-sdk-on-mac-os-x-snow-leopard/' />
+<link rel='next' title='Opera blog roundup' href='http://tiffanybbrown.com/2011/03/28/opera-blog-roundup/' />
+<meta name="generator" content="WordPress 3.9.2" />
+<link rel='canonical' href='http://tiffanybbrown.com/2011/03/23/html5-does-not-allow-self-closing-tags/' />
+<link rel='shortlink' href='http://tiffanybbrown.com/?p=5735' />
+</head>
+<body class="single single-post postid-5735 single-format-standard" >
+
+<div id="wrapper">
+	<header id="mast">
+		<h1 id="sitename"><a href="http://tiffanybbrown.com/">Tiffany B. Brown</a></h1>
+	</header>
+
+	<section id="content">
+		
+		<article class="post" id="post-5735">
+		
+			<h1>HTML5 does NOT allow &#8220;self-closing&#8221; tags</h1>
+
+			<p>&#8230; on non-void elements, at least.</p>
+<p>One of the big misconceptions about HTML5 is that <em>any</em> tag can be self-closed. <strong>That&#8217;s not true</strong>, though it appears that way. </p>
+<p>What HTML5 does is provide <a href="http://dev.w3.org/html5/spec/parsing.html#parsing">parsing rules</a> for handling mismatched tags and markup. While it seems like self-closing tags are acceptable, that&#8217;s not the case. This post explains what&#8217;s really at play. Let&#8217;s take a look.</p>
+<h2>&#8216;Self-closing&#8217;? Our old friend /&gt;</h2>
+<p>Let&#8217;s separate void elements from empty tags that don&#8217;t contain content. You&#8217;re probably familiar with &quot;<a href="http://dev.w3.org/html5/spec/Overview.html#void-elements">void</a>&quot; elements &#8212; elements that can&#8217;t have any content. They include the <code>img</code>,  <code>br</code>,  <code>hr</code>, and <code>meta</code> elements. </p>
+<p>In XHTML, we closed void elements according to the rules of XML syntax, which requires all elements to be closed with end tags or self-closing tags. That&#8217;s where we get the familiar space-slash (&nbsp;/&gt;) of XHTML. HTML5, however, uses HTML parsing syntax, making the &nbsp;/&gt; unnecessary for void elements. It is, however, valid to use it. Yes: <code>&lt;meta charset="UTF-8"&gt;</code> and <code>&lt;meta charset="UTF-8" /&gt;</code> are both acceptable.</p>
+<p>Here&#8217;s the thing: a void element is not the same as an element that doesn&#8217;t contain any content. And &#8216;self-closing&#8217; does <em>not</em> mean the same thing as &#8220;the end tag is optional.&#8221;</p>
+<p>To state it clearly:  <strong>Most HTML5 elements are <em>not</em> self-closing, but many elements do not require an end tag.</strong></p>
+<h2>Wait, what? End tags are optional? It&#8217;s like HTML 3.2 all over again!</h2>
+<p>Yes, some HTML5 elements do not require an end tag. Those circumstances are outlined in the <a href="http://dev.w3.org/html5/spec/Overview.html#normal-elements">HTML5 specification</a>. The <code>p</code> element, for example, does not require an end tag if <q>the <code>p</code> element is immediately followed by an <code>address</code>, <code>article</code>, <code>aside</code>, <code>blockquote</code>, <code>dir</code>, <code>div</code>, <code>dl</code>, <code>fieldset</code>, <code>footer</code>, <code>form</code>, <code>h1</code>, <code>h2</code>, <code>h3</code>, <code>h4</code>, <code>h5</code>, <code>h6</code>, <code>header</code>, <code>hgroup</code>, <code>hr</code>, <code>menu</code>, <code>nav</code>, <code>ol</code>, <code>p</code>, <code>pre</code>, <code>section</code>, <code>table</code>, or <code>ul</code>, element, or if there is no more content in the parent element and the parent element is not an <code>a</code> element.</q></p>
+<p>In fact, some tags can be <a href="http://dev.w3.org/html5/spec/Overview.html#html-elements">omitted altogether</a>. Browsers with compliant HTML5 parsers (such as the recently released <a href="http://labs.opera.com/news/2011/02/22/">Opera 11.5 snapshot</a>) will add the end tags to the DOM.</p>
+<p>But again: &quot;end-tag optional&quot; is a <em>different concept</em> than self-closing.</p>
+<h2>How about some examples?</h2>
+<p>Let&#8217;s take a look at the following bit of code:</p>
+<pre>
+
+&lt;!DOCTYPE html&gt;
+
+&lt;html lang=&quot;en-us&quot;&gt;
+
+&lt;head&gt;
+
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+
+    &lt;title&gt;HTML tag example&lt;/title&gt;
+
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;styles.css&quot; media=&quot;screen&quot;&gt;
+
+
+
+&lt;/head&gt;
+
+&lt;body&gt;
+
+
+
+&lt;header&gt;
+
+    &lt;hgroup&gt;
+
+        &lt;h1&gt;When self-closing tags fail&lt;/h1&gt;
+
+        &lt;h2&gt;Not all HTML5 elements are self closing, though some are &#8216;end tag optional&#8217;&lt;/h2&gt;
+
+    &lt;/hgroup&gt;
+
+&lt;/header&gt;
+
+
+
+&lt;article&gt;
+
+&lt;p&gt;This is to demonstrate that all HTML elements are &lt;em&gt;not&lt;/em&gt; actually self closing. There is a &quot;self-closed&quot; &lt;code&gt;p&lt;/code&gt; element following this closed paragraph. And it&#8217;s followed by a a &quot;self-closed&quot; &lt;code&gt;a&lt;/code&gt; tag and another paragraph.&lt;/p&gt;
+
+
+
+&lt;p id=&quot;notaselfclosinggraf&quot; /&gt;&lt;a id=&quot;notaselfclosinganchor&quot; /&gt;
+
+
+
+&lt;p&gt;As you can see, this paragraph is part of the preceeding link.&lt;/p&gt;
+
+
+
+&lt;/article&gt;
+
+
+
+&lt;/body&gt;
+
+&lt;/html&gt;
+
+</pre>
+<p>You can <a href="http://tiffanybbrown/not-all-html5-tags-are-self-closing/index.html">view the code yourself</a>. Notice that the last paragraph is actually treated as the link text of the of the supposedly self-closed link before it. </p>
+<p>Let&#8217;s take a look at <a href="http://tiffanybbrown/not-all-html5-tags-are-self-closing/">another example</a>:</p>
+<pre>
+
+&lt;!DOCTYPE html&gt;
+
+&lt;html lang="en-us"&gt;
+
+&lt;head&gt;
+
+    &lt;meta charset="UTF-8"&gt;
+
+    &lt;meta name="viewport" content="width=device-width,user-scalable=yes,initial-scale=1.0"/&gt;
+
+    &lt;title&gt;HTML tag example&lt;/title&gt;
+
+    &lt;link rel="stylesheet" href="styles.css" media="screen" /&gt;
+
+    &lt;style&gt;
+
+        .trigger1{
+
+            background: #369;
+
+            border-radius: 4px;
+
+            display:block;
+
+            padding:3px;
+
+            color:#fff;
+
+        }
+
+        
+
+        
+
+        #tvFinderImg{
+
+            background:#0c0;
+
+            display:block;
+
+            width: 10px;
+
+            height:10px;
+
+        }    
+
+        
+
+        #tvFinderImg h3{
+
+            border:1px dashed #c09;
+
+        }
+
+    &lt;/style&gt;
+
+&lt;/head&gt;
+
+&lt;body&gt;
+
+
+
+&lt;header&gt;
+
+    &lt;h1&gt;Spans aren't self-closing either&lt;/h1&gt;
+
+&lt;/header&gt;
+
+
+
+&lt;div&gt;
+
+&lt;a
+
+class="trigger1" href="#tvFindersrchd"&gt;Lorem ipsum &lt;span id="tvFinderImg" /&gt;&lt;/a&gt;
+
+&lt;p&gt;This is some copy after the "self-closed" tag.&lt;/p&gt;
+
+&lt;/div&gt;
+
+&lt;/body&gt;
+
+&lt;/html&gt;
+
+</pre>
+<p>In older browsers &#8212; Internet Explorer 8, for example &#8212; the supposedly self-closed tags are handled like unclosed tags. In those browsers, you will see a pink border around <q>This is some copy after the &#8220;self-closed&#8221; tag.</q> </p>
+<p><img src="http://webinista.s3.amazonaws.com/images/uploads/2011/03/html5parsingspans.png" alt="" title="html5parsingspans" width="640" height="356" class="alignnone size-full wp-image-5740" /></p>
+<p>In browsers that <em>do</em> have HTML5-compliant parsers &#8212; Firefox 4, the Opera 11.5 labs build mentioned above &#8212; the browser re-writes the DOM and adds a closing span tag. Yep. HTML5 saves developers from ourselves by providing rules for handling bad markup. View the DOM of that page in Opera 11.5 with Dragonfly, or Firefox 4 using Firebug (or in Chrome, Safari or IE9 using their developer tools) to see what I mean.</p>
+<p>Let me restate this point for clarity: <strong>it only <em>appears</em> that self-closing tags are permitted in HTML5. In actuality, the browser parser treats non-void, self-closed tags as start tags and closes them for you.</strong></p>
+<p>Don&#8217;t believe me? Try running <a href="http://validator.w3.org/check?uri=http%3A%2F%2Ftiffanybbrown.com%2Fnot-all-html5-tags-are-self-closing%2Findex.html&#038;charset=%28detect+automatically%29&#038;doctype=Inline&#038;group=0">these</a> <a href="http://validator.w3.org/check?uri=http%3A%2F%2Ftiffanybbrown.com%2Fnot-all-html5-tags-are-self-closing%2Fwithspans.html&#038;charset=%28detect+automatically%29&#038;doctype=Inline&#038;group=0&#038;user-agent=W3C_Validator%2F1.2">pages</a> through the W3C Markup Validator. </p>
+<h3>So I can go back to sloppy code?</h3>
+<p><em>Maybe</em>. I think you can make an excellent argument for using relaxed markup rules when targeting end-users who may be paying per byte of bandwidth or who are on slow connections &#8212; Canadian mobile users, for example. Send less code. Make the browser handle it.</p>
+<p>But keep in mind that older browsers do not have HTML5 parsers. Internet Explorer 7 &#038; 8 do not. Opera 11.10 beta does not. Opera Mobile does not. (Older versions of WebKit technically don&#8217;t either, but WebKit has long <a href="http://www.webkit.org/blog/1273/the-html5-parsing-algorithm/">supported the <code>/&gt;</code> syntax</a>.)  If you have a large proportion of older browser users in your audience, stick to the stricter, XML-style syntax: if you have a start tag, use an end tag. The space-slash is optional for void elements. Don&#8217;t forget to validate!</p>
+		
+		</article>
+		
+		<section id="comment-wrap">
+<!-- You can start editing here. -->
+
+	<h3 id="comments">18 Responses to &#8220;HTML5 does NOT allow &#8220;self-closing&#8221; tags&#8221;</h3>
+
+	<div class="navigation">
+		<div class="alignleft"></div>
+		<div class="alignright"></div>
+	</div>
+
+	<ol id="commentlist">
+			<li class="comment even thread-even depth-1" id="comment-93743">
+				<div id="div-comment-93743" class="comment-body">
+				<div class="comment-author vcard">
+						<cite class="fn"><a href='http://twitter.com/myqroft' rel='external nofollow' class='url'>Alfonso Martinez</a></cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://tiffanybbrown.com/2011/03/23/html5-does-not-allow-self-closing-tags/comment-page-1/#comment-93743">
+			23 Mar 2011 at 6:53 pm</a>		</div>
+
+		<p>Enlightening, thanks!</p>
+
+		<div class="reply">
+					</div>
+				</div>
+		</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1" id="comment-93758">
+				<div id="div-comment-93758" class="comment-body">
+				<div class="comment-author vcard">
+						<cite class="fn"><a href='http://lauhakari.com/' rel='external nofollow' class='url'>Lauhakari [mikko]</a></cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://tiffanybbrown.com/2011/03/23/html5-does-not-allow-self-closing-tags/comment-page-1/#comment-93758">
+			8 Apr 2011 at 9:46 pm</a>		</div>
+
+		<p>Interesting, but I have to say that I&#8217;ve never before seen anyone self-close a  tag or  tag.<br />
+And I don&#8217;t see the point of doing this ?!</p>
+
+		<div class="reply">
+					</div>
+				</div>
+		</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1" id="comment-93759">
+				<div id="div-comment-93759" class="comment-body">
+				<div class="comment-author vcard">
+						<cite class="fn">Anonymous</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://tiffanybbrown.com/2011/03/23/html5-does-not-allow-self-closing-tags/comment-page-1/#comment-93759">
+			8 Apr 2011 at 10:07 pm</a>		</div>
+
+		<p>There&#8217;s an example on BestBuy&#8217;s mobile site. If you run the following command from a terminal window, you can see it:</p>
+<p>curl -LA &#8220;Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_1 like Mac OS X; en-us) AppleWebKit/532.9 (KHTML, like Gecko) Version/4.0.5 Mobile/8B117 Safari/6531.22.7&#8243; <a href="http://bestbuy.com/" rel="nofollow">http://bestbuy.com/</a></p>
+<p>Look for this code:</p>
+<p>A few sites optimized for mobile Safari also use  instead of  because WebKit supported that syntax in XHTML.</p>
+
+		<div class="reply">
+					</div>
+				</div>
+		</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1" id="comment-93777">
+				<div id="div-comment-93777" class="comment-body">
+				<div class="comment-author vcard">
+						<cite class="fn"><a href='http://www.surgeforward.com' rel='external nofollow' class='url'>Web Development</a></cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://tiffanybbrown.com/2011/03/23/html5-does-not-allow-self-closing-tags/comment-page-1/#comment-93777">
+			19 Apr 2011 at 9:47 pm</a>		</div>
+
+		<p>We all know what &#8220;best practice&#8221; is and we should always practice it.  If someone looks at your code and it is lacking the proper closing it can confuse and tell them it is ok to cut corners.  I for one will keep using the best practice and keep code clean and readable.  Thanks for the post.</p>
+
+		<div class="reply">
+					</div>
+				</div>
+		</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1" id="comment-93799">
+				<div id="div-comment-93799" class="comment-body">
+				<div class="comment-author vcard">
+						<cite class="fn">Quemaltrip</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://tiffanybbrown.com/2011/03/23/html5-does-not-allow-self-closing-tags/comment-page-1/#comment-93799">
+			10 Jun 2011 at 8:02 pm</a>		</div>
+
+		<p>ITS SOOO TRUE</p>
+
+		<div class="reply">
+					</div>
+				</div>
+		</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1" id="comment-93800">
+				<div id="div-comment-93800" class="comment-body">
+				<div class="comment-author vcard">
+						<cite class="fn"><a href='http://pornel.net/' rel='external nofollow' class='url'>porneL</a></cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://tiffanybbrown.com/2011/03/23/html5-does-not-allow-self-closing-tags/comment-page-1/#comment-93800">
+			11 Jun 2011 at 3:11 pm</a>		</div>
+
+		<p>You&#8217;re not setting application/xhtml+xml MIME type, so you&#8217;re not requesting XML syntax to work in HTML5.</p>
+<p>In text/html mode HTML5 merely tolerates some XML-like talismans, without giving them any meaning.</p>
+<p>Please don&#8217;t forget that HTML5 has *two* syntaxes â€” text/html and XML â€” and the one that has detailed parsing rules in the spec is the text/html one.</p>
+
+		<div class="reply">
+					</div>
+				</div>
+		</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1" id="comment-93801">
+				<div id="div-comment-93801" class="comment-body">
+				<div class="comment-author vcard">
+						<cite class="fn">Anonymous</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://tiffanybbrown.com/2011/03/23/html5-does-not-allow-self-closing-tags/comment-page-1/#comment-93801">
+			11 Jun 2011 at 3:28 pm</a>		</div>
+
+		<p>Not quite. HTML5 is served as text/html. If you serve it with an application/xhtml+xml MIME type, you are serving XHTML. It is a slight, but significant difference. </p>
+<p>But  this post is about non-void elements, not empty elements. In HTML5,  and  are perfectly valid, &lt;/a&gt; is not, though some browsers will treat it that way. See the first sentence after the headline.</p>
+<p>IIRC, in both syntaxes, ONLY void elements can be self-closed. Other elements do not require a closing tag. For these elements, HTML5 parsers will auto-close them. Most inline items, and the script and style elements DO require it. </p>
+
+		<div class="reply">
+					</div>
+				</div>
+		</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1" id="comment-93816">
+				<div id="div-comment-93816" class="comment-body">
+				<div class="comment-author vcard">
+						<cite class="fn"><a href='http://mplungjan.myopenid.com/' rel='external nofollow' class='url'>Michel</a></cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://tiffanybbrown.com/2011/03/23/html5-does-not-allow-self-closing-tags/comment-page-1/#comment-93816">
+			29 Aug 2011 at 11:35 am</a>		</div>
+
+		<p>Firefox oddity: We have an xml structure where a link is created like this:<br />
+text inside linkhttp:&#8230;.&lt;/link&gt;<br />
+When entering that into an editor that parses the output to an iFrame, Firefox (and IE6-8 not)Â  will remove the &lt;/link&gt; for you, ending up with invalid xml. A case in point is THIS EDITOR RIGHT HERE which did the bad deed right now!!!! I had to enter the end tag using &amp; lt;</p>
+
+		<div class="reply">
+					</div>
+				</div>
+		</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1" id="comment-93819">
+				<div id="div-comment-93819" class="comment-body">
+				<div class="comment-author vcard">
+						<cite class="fn">Jacob</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://tiffanybbrown.com/2011/03/23/html5-does-not-allow-self-closing-tags/comment-page-1/#comment-93819">
+			22 Sep 2011 at 9:45 pm</a>		</div>
+
+		<p>Can I self close a script tag in the header if it has a src attribute set? E.g.</p>
+<p>Instead of </p>
+<p>Seems it would be redundant to close it properly like  if there is no actual content inside the tag, as the content is coming in via the src attribute.</p>
+
+		<div class="reply">
+					</div>
+				</div>
+		</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1" id="comment-93820">
+				<div id="div-comment-93820" class="comment-body">
+				<div class="comment-author vcard">
+						<cite class="fn">Anonymous</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://tiffanybbrown.com/2011/03/23/html5-does-not-allow-self-closing-tags/comment-page-1/#comment-93820">
+			24 Sep 2011 at 11:12 pm</a>		</div>
+
+		<p>No. You still need the closing .</p>
+<p>Some older versions of Safari supportedÂ self-closed script tags if you used the space-slash syntax, but with its new parsing engine, it no longer does. </p>
+<p>The HTML5 specification is pretty clear about when tags can be self closed (for non-void elements such as ), when a closing tag is optional ( in most cases), and when a closing tag is required (most other elements).</p>
+
+		<div class="reply">
+					</div>
+				</div>
+		</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1" id="comment-93821">
+				<div id="div-comment-93821" class="comment-body">
+				<div class="comment-author vcard">
+						<cite class="fn">Anonymous</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://tiffanybbrown.com/2011/03/23/html5-does-not-allow-self-closing-tags/comment-page-1/#comment-93821">
+			14 Oct 2011 at 10:38 pm</a>		</div>
+
+		<p>Can you update your post to include a link to the HTML5 specification whereit shows  &#8220;when tags can be self closed (for non-void elements such as ), when a closing tag is optional ( in most cases), and when a closing tag is required (most other elements).&#8221;? That&#8217;d be helpful for many readers. Excellent post, thanks!</p>
+
+		<div class="reply">
+					</div>
+				</div>
+		</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1" id="comment-93844">
+				<div id="div-comment-93844" class="comment-body">
+				<div class="comment-author vcard">
+						<cite class="fn"><a href='http://www.konturart.net/' rel='external nofollow' class='url'>kontur</a></cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://tiffanybbrown.com/2011/03/23/html5-does-not-allow-self-closing-tags/comment-page-1/#comment-93844">
+			21 Dec 2011 at 6:30 am</a>		</div>
+
+		<p>Interesting read, but all in all: Stick to proper and logical syntax no matter what. Half of the postings on html5 found on the web are confusing, misleading or advocate that you disregard reasonable practices, like, euhm, ensuring your website can be properly viewed.</p>
+
+		<div class="reply">
+					</div>
+				</div>
+		</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1" id="comment-93849">
+				<div id="div-comment-93849" class="comment-body">
+				<div class="comment-author vcard">
+						<cite class="fn">Thulasiraman</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://tiffanybbrown.com/2011/03/23/html5-does-not-allow-self-closing-tags/comment-page-1/#comment-93849">
+			10 Jan 2012 at 7:00 pm</a>		</div>
+
+		<p>Hi, Â even if I specify the self closing tag for img, br and hr, while do view source /&gt; got changed to &gt;. Â So I am getting error in W3C validator. Â How to keep closing tag? Â Thanks</p>
+
+		<div class="reply">
+					</div>
+				</div>
+		</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1" id="comment-93850">
+				<div id="div-comment-93850" class="comment-body">
+				<div class="comment-author vcard">
+						<cite class="fn">Anonymous</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://tiffanybbrown.com/2011/03/23/html5-does-not-allow-self-closing-tags/comment-page-1/#comment-93850">
+			11 Jan 2012 at 11:08 am</a>		</div>
+
+		<p>br and hr do not need to be self closed in HTML. they&#8217;re what&#8217;s known as void elements.</p>
+<p>if you&#8217;re seeing errors in the validator, make sure that you are using the right DOCTYPE and that you are serving content with the appropriate MIME or Content-type header value. If you&#8217;re using the /&gt; to close your br and hr tags, you should make sure that your pages are served as XHTML and not XML.</p>
+
+		<div class="reply">
+					</div>
+				</div>
+		</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1" id="comment-93851">
+				<div id="div-comment-93851" class="comment-body">
+				<div class="comment-author vcard">
+						<cite class="fn">Thulasiraman</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://tiffanybbrown.com/2011/03/23/html5-does-not-allow-self-closing-tags/comment-page-1/#comment-93851">
+			12 Jan 2012 at 2:15 am</a>		</div>
+
+		<p>Sorry. Â In below text, doctype not getting displayed. Â I am giving it again.Initial doctype (got validator error):<br />
+&#060;&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; &quot;<a href="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&#038;gt" rel="nofollow">http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&#038;gt</a>;</p>
+<p>Changed to doctype (No error. Â But not xhtml)<br />
+&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; &quot;<a href="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&#038;gt" rel="nofollow">http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&#038;gt</a>;</p>
+
+		<div class="reply">
+					</div>
+				</div>
+		</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1" id="comment-93856">
+				<div id="div-comment-93856" class="comment-body">
+				<div class="comment-author vcard">
+						<cite class="fn">Jonathan</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://tiffanybbrown.com/2011/03/23/html5-does-not-allow-self-closing-tags/comment-page-1/#comment-93856">
+			25 Jan 2012 at 3:49 pm</a>		</div>
+
+		<p>actuallly if you serve a page with  application/xhtml+xml MIME type, it is not XHTML, but it is aÂ  HTML5 document that is also a well formed XML document (XHTML5 Polyglot)</p>
+<p><a href="http://www.w3.org/TR/html-polyglot/" rel="nofollow">http://www.w3.org/TR/html-polyglot/</a><br />
+<a href="http://dev.w3.org/html5/html-xhtml-author-guide/" rel="nofollow">http://dev.w3.org/html5/html-xhtml-author-guide/</a></p>
+
+		<div class="reply">
+					</div>
+				</div>
+		</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1" id="comment-93857">
+				<div id="div-comment-93857" class="comment-body">
+				<div class="comment-author vcard">
+						<cite class="fn">Anonymous</cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://tiffanybbrown.com/2011/03/23/html5-does-not-allow-self-closing-tags/comment-page-1/#comment-93857">
+			25 Jan 2012 at 6:35 pm</a>		</div>
+
+		<p>My interpretation of those documents &#8211; which I actually used as the basis for previous comment &#8211; is that you are *indeed* serving XHTML, though not in the sense that there&#8217;s an XHTML5 DOCTYPE.Â Perhaps a clearer way to explain it is to say that XHTML5 has been redefined to mean &#8220;HTML syntax served with an application/xhtml+xml content type and parsed according to the rules of XML well-formedness.&#8221;Â Now in terms of coding practices, again: that means using /&gt; to close *void* elements &#8212; img, meta, br, hr &#8212; is fine, but not necessary in HTML5. It becomes mandatory, however, if you&#8217;re serving those pages with an Â application/xhtml+xml content type.But using /&gt; to close elements such as a or span *is not* valid &#8220;XHTML5,&#8221; even though it is certainly valid XHTML1.0.Â </p>
+
+		<div class="reply">
+					</div>
+				</div>
+		</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1" id="comment-93858">
+				<div id="div-comment-93858" class="comment-body">
+				<div class="comment-author vcard">
+						<cite class="fn"><a href='http://www.itgeared.com/' rel='external nofollow' class='url'>JM</a></cite> <span class="says">says:</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="http://tiffanybbrown.com/2011/03/23/html5-does-not-allow-self-closing-tags/comment-page-1/#comment-93858">
+			27 Jan 2012 at 12:02 pm</a>		</div>
+
+		<p>good information about the html self-closing tags.Â  should save me the work having to go back and fix my tags later&#8230;</p>
+
+		<div class="reply">
+					</div>
+				</div>
+		</li><!-- #comment-## -->
+	</ol>
+
+	
+ 
+
+</section>
+		
+		 
+		<nav id="post-navigation">
+			<div id="post-navigation-next"><a href="http://tiffanybbrown.com/2011/03/28/opera-blog-roundup/" rel="next">Opera blog roundup</a> </div>
+			<div id="post-navigation-prev"><a href="http://tiffanybbrown.com/2011/03/22/installing-the-android-3-0-sdk-on-mac-os-x-snow-leopard/" rel="prev">Android 3.0 SDK on Mac OS X &#8211; Snow Leopard: Installation tips</a></div>
+		</nav>
+	
+		</section> <!-- end content -->
+
+<aside id="sidebar">
+
+	<section id="about-post">
+				<h4>About this post</h4>
+		<div id="posted-on"><b>Posted on:</b> 23 March 2011 at 11:31 am</div>
+		<div id="permalink-uri"><b>Permalink:</b> <a href="http://tiffanybbrown.com/2011/03/23/html5-does-not-allow-self-closing-tags/">http://tiffanybbrown.com/2011/03/23/html5-does-not-allow-self-closing-tags/</a></div>
+		
+		<div id="single-trackback-uri">
+					</div>
+		
+		<div id="post-categories"><b>Categories:</b> <a href="http://tiffanybbrown.com/category/browsers/" title="View all posts in Browsers" rel="category tag">Browsers</a>, <a href="http://tiffanybbrown.com/category/xhtml/" title="View all posts in HTML, HTML5, XHTML, etc." rel="category tag">HTML, HTML5, XHTML, etc.</a></div>
+		<div id="post-tags">
+			<b>Tagged: </b><a href="http://tiffanybbrown.com/tag/html5/" rel="tag">html5</a>, <a href="http://tiffanybbrown.com/tag/html5-parsing/" rel="tag">html5 parsing</a>		</div>
+		
+		
+	</section>
+		<section id="related">
+	<h4>Possibly related posts</h4>
+	<ul>
+			<li class="rel-item"><a href="http://tiffanybbrown.com/2013/10/24/date-input-in-html5-restricting-dates-and-thought-for-working-around-limitations/" id="linkto7426">Date input in HTML5: Restricting dates, and a thought for working around limitations</a> </li>
+		
+			<li class="rel-item"><a href="http://tiffanybbrown.com/2013/10/23/use-idl-attributes-to-test-input-type-support/" id="linkto7416">Use IDL attributes to test <code>&lt;input type=""&gt;</code> support</a> </li>
+		
+			<li class="rel-item"><a href="http://tiffanybbrown.com/2013/09/09/sitepoint-html5-experts-chat-transcript/" id="linkto7381">SitePoint HTML5 Experts chat transcript</a> </li>
+		
+			<li class="rel-item"><a href="http://tiffanybbrown.com/2012/11/08/the-datalist-element/" id="linkto6855">Meet the <code>datalist</code> element</a> </li>
+		
+			<li class="rel-item"><a href="http://tiffanybbrown.com/2012/02/07/input-typerange-and-androids-stock-browser/" id="linkto6629"><code>input type="range"</code> and Android&#8217;s stock browser.</a> </li>
+		
+		 </ul>
+	</section>
+	
+</aside> <!-- end side bar -->		
+		
+
+	<footer>
+		<section id="about">
+			<h4>About me</h4>
+			<p>Web developer. Dilettante. Angeleno. Progressive. Atheist. Feminist. Globetrotter.  Occasional writer. Foodie tendencies. <a href="/about/">Long version &rarr;</a>
+			</p>
+		</section>
+
+		<form method="get" id="searchform" action="http://duckduckgo.com/">
+<div>
+	<label for="s">Search the site</label>
+	<input type="search" placeholder="enter a search term" name="q" id="q">
+	<input type="hidden" name="sites" value="tiffanybbrown.com">
+	<button type="submit" id="searchsubmit">Search</button>
+</div>
+</form>
+
+		<p id="copyright">&copy; 2001 - 2014 by Tiffany B. Brown. All rights reserved, except where otherwise noted. <a href="http://www.komodomedia.com/blog/2008/12/social-media-mini-iconpack/">Free social media icons</a> by Komodomedia.</p>
+		<script type='text/javascript' src='http://tiffanybbrown.com/wp-includes/js/comment-reply.min.js?ver=3.9.2'></script>
+	</footer>
+</div><!-- end wrapper-->
+
+
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://webinista.s3.amazonaws.com/js.js"></script>
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-11476143-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+</body>
+</html>
+<!-- Dynamic page generated in 0.189 seconds. -->
+<!-- Cached page generated by WP-Super-Cache on 2014-08-16 17:17:34 -->
+
+<!-- super cache -->

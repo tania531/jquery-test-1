@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"> 
+
+  <plist version="1.0">
+    <dict>
+       
+  
+    
+    
+    
+         
+  <key>failureType</key><string></string>
+  
+  <key>customerMessage</key><string>You have not verified your account.</string>
+  
+  <key>m-allowed</key><false/>
+  
+  
+  
+  
+  
+       
+       
+    
+      <key>dialog</key>
+      <dict>
+    
+    
+    <key>m-allowed</key><false/>
+      
+    <key>message</key><string>You have not verified your account.</string>
+    <key>explanation</key><string>Click OK to review the instructions on how to verify your account.</string>
+    <key>defaultButton</key><string>ok</string>
+
+    
+    <key>okButtonString</key><string>OK</string>
+    <key>okButtonAction</key><dict>
+
+
+
+
+    <key>kind</key><string>Goto</string>
+    <key>url</key><string>https://buy.itunes.apple.com/WebObjects/MZFinance.woa/wa/com.apple.jingle.app.finance.MZDAAccountManipulation/signupVerifyEmail?pricingParameters=STDQ&amp;salableAdamId=497799835&amp;mt=12&amp;productType=C&amp;workflowID=9313&amp;price=0&amp;guid=6C4008AEC642</string>
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+</dict>
+
+
+    <key>cancelButtonString</key><string>Cancel</string>
+    
+
+    
+    
+
+    
+    
+    
+    
+</dict>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  
+
+
+    
+    </dict>
+  </plist>
+  
+
+
+
+
+        

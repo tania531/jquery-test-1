@@ -1,0 +1,110 @@
+[Mon Apr 13 07:58:51 PDT 2015]path: /usr/bin:/bin:/usr/sbin:/sbin
+The path includes /usr/bin.
+path new: /usr/bin:/bin:/usr/sbin:/sbin
+check whereis:/usr/bin/whoami
+check unzip:/usr/bin/unzip
+os ver: ProductName:	Mac OS X
+ProductVersion:	10.10.2
+BuildVersion:	14C1514
+check admin:tania, 0, user is a member of the group, user is a member of the group, 29
+drwxrwxr-x+ 45 root  admin  1530 Apr 13 07:50 /Applications
+ 0: group:everyone deny delete
+[Mon Apr 13 07:58:51 PDT 2015]use this app path: /Applications/zoom.us.app
+[Mon Apr 13 07:58:51 PDT 2015]use this folder path: /Applications
+[Mon Apr 13 07:58:51 PDT 2015]use this dock path: file://localhost/Applications/zoom.us.app/
+get running app id: 
+result of remove zoom.us.app: 0
+[Mon Apr 13 07:58:51 PDT 2015]ok to rm
+the app directory has been removed.
+[Mon Apr 13 07:58:51 PDT 2015]result of copy zoom.us.app: 0
+-rw-r--r--  1 tania  staff  10509231 Apr 13 01:07 /Applications/zm.zip
+Install succeeds
+unzip ver: UnZip 5.52 of 28 February 2005, by Info-ZIP.  Maintained by C. Spieler.  Send
+bug reports using http://www.info-zip.org/zip-bug.html; see README for details.
+
+Latest sources and executables are at ftp://ftp.info-zip.org/pub/infozip/ ;
+see ftp://ftp.info-zip.org/pub/infozip/UnZip.html for other sites.
+
+Compiled with gcc 4.2.1 Compatible Apple LLVM 6.0 (clang-600.0.39) for Unix on Sep  9 2014.
+
+UnZip special compilation options:
+	COPYRIGHT_CLEAN (PKZIP 0.9x unreducing method not supported)
+	SET_DIR_ATTRIB
+	TIMESTAMP
+	USE_EF_UT_TIME
+	USE_UNSHRINK (PKZIP/Zip 1.x unshrinking method supported)
+	USE_DEFLATE64 (PKZIP 4.x Deflate64(tm) supported)
+	VMS_TEXT_CONV
+	[decryption, version 2.9 of 05 May 2000]
+
+UnZip and ZipInfo environment options:
+           UNZIP:  [none]
+        UNZIPOPT:  [none]
+         ZIPINFO:  [none]
+      ZIPINFOOPT:  [none]
+[Mon Apr 13 07:58:51 PDT 2015]check unzip return:0, 
+zip file path:/Applications/zm.zip
+[Mon Apr 13 07:58:51 PDT 2015]remove previous install plugin: 1
+[Mon Apr 13 07:58:51 PDT 2015]result of remove zoom plugin: 0
+result of copy zoom plugin: 0
+parent id: 581
+Dock link name: Launchpad
+len:9
+[Mon Apr 13 07:58:51 PDT 2015]dock item:1
+Dock link name: Safari
+len:6
+[Mon Apr 13 07:58:51 PDT 2015]dock item:2
+Dock link name: Mail
+len:4
+[Mon Apr 13 07:58:51 PDT 2015]dock item:3
+Dock link name: Contacts
+len:8
+[Mon Apr 13 07:58:51 PDT 2015]dock item:4
+Dock link name: Calendar
+len:8
+[Mon Apr 13 07:58:51 PDT 2015]dock item:5
+Dock link name: Notes
+len:5
+[Mon Apr 13 07:58:51 PDT 2015]dock item:6
+Dock link name: Reminders
+len:9
+[Mon Apr 13 07:58:51 PDT 2015]dock item:7
+Dock link name: Maps
+len:4
+[Mon Apr 13 07:58:51 PDT 2015]dock item:8
+Dock link name: Messages
+len:8
+[Mon Apr 13 07:58:51 PDT 2015]dock item:9
+Dock link name: FaceTime
+len:8
+[Mon Apr 13 07:58:51 PDT 2015]dock item:10
+Dock link name: iPhoto
+len:6
+[Mon Apr 13 07:58:51 PDT 2015]dock item:11
+Dock link name: Pages
+len:5
+[Mon Apr 13 07:58:51 PDT 2015]dock item:12
+Dock link name: Numbers
+len:7
+[Mon Apr 13 07:58:51 PDT 2015]dock item:13
+Dock link name: Keynote
+len:7
+[Mon Apr 13 07:58:51 PDT 2015]dock item:14
+Dock link name: iTunes
+len:6
+[Mon Apr 13 07:58:51 PDT 2015]dock item:15
+Dock link name: iBooks
+len:6
+[Mon Apr 13 07:58:51 PDT 2015]dock item:16
+Dock link name: App Store
+len:9
+[Mon Apr 13 07:58:51 PDT 2015]dock item:17
+Dock link name: System Preferences
+len:18
+[Mon Apr 13 07:58:51 PDT 2015]dock item:18
+zoom.us index: -1, 0
+get new dock loc: 17, 1
+install path:file://localhost/Applications/zoom.us.app/
+start new app: /Applications/zoom.us.app
+installer pid: 581
+[Mon Apr 13 07:58:51 PDT 2015]installer saved state: /Users/tania/Library/Saved Application State/com.apple.installer.savedState/windows.plist

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>UDID</key>
+	<string>5D351CD8-85EF-45A4-9649-5C5076354184</string>
+	<key>deviceType</key>
+	<string>com.apple.CoreSimulator.SimDeviceType.Resizable-iPhone</string>
+	<key>name</key>
+	<string>Resizable iPhone</string>
+	<key>runtime</key>
+	<string>com.apple.CoreSimulator.SimRuntime.iOS-8-3</string>
+	<key>state</key>
+	<integer>1</integer>
+</dict>
+</plist>

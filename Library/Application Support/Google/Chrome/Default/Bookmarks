@@ -1,0 +1,156 @@
+{
+   "checksum": "62412c93c900a51a93a62c4e7ec8438c",
+   "roots": {
+      "bookmark_bar": {
+         "children": [ {
+            "date_added": "13073411237910000",
+            "id": "5",
+            "meta_info": {
+               "stars.id": "ssc_71738ef81cb71165",
+               "stars.isSynced": "true",
+               "stars.pageData": "Ig5YdzBUa3U1U2FGbktsTQ==",
+               "stars.type": "2"
+            },
+            "name": "",
+            "sync_transaction_version": "6",
+            "type": "url",
+            "url": "https://mail.google.com/mail/ca/u/0/#inbox"
+         }, {
+            "date_added": "13073411253626000",
+            "id": "6",
+            "meta_info": {
+               "stars.id": "ssc_cd2c03bb728d67d6",
+               "stars.isSynced": "true",
+               "stars.pageData": "EpECWm9vbSB1bmlmaWVzIGNsb3VkIHZpZGVvIGNvbmZlcmVuY2luZywgc2ltcGxlIG9ubGluZSBtZWV0aW5ncywgYW5kIGNyb3NzIHBsYXRmb3JtIGdyb3VwIGNoYXQgaW50byBvbmUgZWFzeS10by11c2UgcGxhdGZvcm0uIE91ciBzb2x1dGlvbiBvZmZlcnMgdGhlIGJlc3QgdmlkZW8sIGF1ZGlvLCBhbmQgc2NyZWVuLXNoYXJpbmcgZXhwZXJpZW5jZSBhY3Jvc3MgWm9vbVByZXNlbmNlLCBXaW5kb3dzLCBNYWMsIGlPUywgQW5kcm9pZCwgYW5kIEguMzIzL1NJUCByb29tIHN5c3RlbXMuIg5yZzZMQ3RsdnluazJFTQ==",
+               "stars.type": "2"
+            },
+            "name": "",
+            "sync_transaction_version": "11",
+            "type": "url",
+            "url": "https://zoom.us/join"
+         }, {
+            "date_added": "13073412410272000",
+            "id": "10",
+            "meta_info": {
+               "stars.id": "ssc_298445f345f39da9",
+               "stars.isSynced": "true",
+               "stars.pageData": "Ig5BZFVqQUllZlRrWHJETQ==",
+               "stars.type": "2"
+            },
+            "name": "",
+            "sync_transaction_version": "28",
+            "type": "url",
+            "url": "https://jsfiddle.net/"
+         }, {
+            "date_added": "13073418537186173",
+            "id": "12",
+            "name": "tania531",
+            "sync_transaction_version": "36",
+            "type": "url",
+            "url": "https://github.com/tania531?tab=contributions&from=2015-04-11"
+         }, {
+            "date_added": "13073442513598386",
+            "id": "15",
+            "name": "chyld/apollo",
+            "sync_transaction_version": "46",
+            "type": "url",
+            "url": "https://github.com/chyld/apollo"
+         }, {
+            "date_added": "13073453791798142",
+            "id": "17",
+            "name": "coding-house-apr2015",
+            "sync_transaction_version": "52",
+            "type": "url",
+            "url": "https://github.com/coding-house-apr2015/"
+         }, {
+            "date_added": "13073418569666716",
+            "id": "13",
+            "name": "checkers/index.js at master · coding-house-apr2015/checkers · GitHub",
+            "sync_transaction_version": "40",
+            "type": "url",
+            "url": "https://github.com/coding-house-apr2015/checkers/blob/master/client/index.js"
+         }, {
+            "children": [ {
+               "date_added": "13073412061564000",
+               "id": "8",
+               "meta_info": {
+                  "stars.id": "ssc_35d023a73746f78c",
+                  "stars.isSynced": "true",
+                  "stars.pageData": "Ig5SM0tiSjZwaFhuSW9STQ==",
+                  "stars.type": "2"
+               },
+               "name": "Table of contents",
+               "sync_transaction_version": "18",
+               "type": "url",
+               "url": "https://www.learnhowtoprogram.com/table-of-contents"
+            }, {
+               "date_added": "13073418531121774",
+               "id": "11",
+               "name": "tania531 (tania) · GitHub",
+               "sync_transaction_version": "31",
+               "type": "url",
+               "url": "https://github.com/tania531?tab=contributions&from=2015-04-11"
+            } ],
+            "date_added": "13073412049696733",
+            "date_modified": "13073418537186173",
+            "id": "7",
+            "meta_info": {
+               "stars.id": "ssf_c10644bc6cf41503",
+               "stars.isSynced": "true"
+            },
+            "name": "dev",
+            "sync_transaction_version": "14",
+            "type": "folder"
+         }, {
+            "date_added": "13073431694801737",
+            "id": "14",
+            "name": "➀ coding-house-apr2015 - Gitter",
+            "sync_transaction_version": "43",
+            "type": "url",
+            "url": "https://gitter.im/coding-house-apr2015"
+         }, {
+            "children": [ {
+               "date_added": "13073453115781818",
+               "id": "16",
+               "name": "apr2015",
+               "sync_transaction_version": "49",
+               "type": "url",
+               "url": "https://drive.google.com/folderview?id=0B4iPWDqbzCMAfkdINlJPbkJSUVVraTFLR0dPVWpDbmhZajh2cm5kVkl3bXNhSDZySkNyVFE&usp=sharing_eid"
+            } ],
+            "date_added": "13073412076884032",
+            "date_modified": "13073453115781818",
+            "id": "9",
+            "meta_info": {
+               "stars.id": "ssf_0eab0e65163dc793",
+               "stars.isSynced": "true"
+            },
+            "name": "CH",
+            "sync_transaction_version": "21",
+            "type": "folder"
+         } ],
+         "date_added": "13073410134015488",
+         "date_modified": "13073453791798142",
+         "id": "1",
+         "name": "Bookmarks Bar",
+         "type": "folder"
+      },
+      "other": {
+         "children": [  ],
+         "date_added": "13073410134015502",
+         "date_modified": "0",
+         "id": "2",
+         "name": "Other Bookmarks",
+         "type": "folder"
+      },
+      "sync_transaction_version": "52",
+      "synced": {
+         "children": [  ],
+         "date_added": "13073410134015504",
+         "date_modified": "0",
+         "id": "3",
+         "name": "Mobile Bookmarks",
+         "type": "folder"
+      }
+   },
+   "version": 1
+}

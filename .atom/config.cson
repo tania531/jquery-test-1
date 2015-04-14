@@ -1,0 +1,18 @@
+"*":
+  "exception-reporting":
+    userId: "8f509f8e-8a71-8e73-cd80-743045290d95"
+  welcome:
+    showOnStartup: false
+  core:
+    themes: [
+      "one-dark-ui"
+      "monokai"
+    ]
+  editor:
+    invisibles: {}
+    fontSize: 13
+  "linter-csslint": {}
+  linter: {}
+  "linter-jshint": {}
+  autosave:
+    enabled: true

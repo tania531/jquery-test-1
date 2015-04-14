@@ -1,0 +1,80 @@
+Apr 14 08:50:22 Tarquins-MacBook-Pro.local Mail[7718] <Debug>: <addTerminationHandler:> Added handler: <MailApp: 0x7fd17a701520>
+	_currentTerminationHandlers: (null)
+	_terminationHandlers: (
+	    "<MailApp: 0x7fd17a701520>"
+	)
+	_terminationReply: NSTerminateCancel
+Apr 14 08:50:22 Tarquins-MacBook-Pro.local Mail[7718] <Debug>: <addTerminationHandler:> Added handler: <ActivityViewer: 0x600000072340>
+	_currentTerminationHandlers: (null)
+	_terminationHandlers: (
+	    "<MailApp: 0x7fd17a701520>",
+	    "<ActivityViewer: 0x600000072340>"
+	)
+	_terminationReply: NSTerminateCancel
+Apr 14 08:50:22 Tarquins-MacBook-Pro.local Mail[7718] <Debug>: <addTerminationHandler:> Added handler: <MailTimeMachineController: 0x60000008f690>
+	_currentTerminationHandlers: (null)
+	_terminationHandlers: (
+	    "<MailApp: 0x7fd17a701520>",
+	    "<ActivityViewer: 0x600000072340>",
+	    "<MailTimeMachineController: 0x60000008f690>"
+	)
+	_terminationReply: NSTerminateCancel
+Apr 14 08:50:23 Tarquins-MacBook-Pro.local Mail[7718] <Debug>: <addTerminationHandler:> Added handler: <MessageViewer: 0x7fd17a418940>
+	_currentTerminationHandlers: (null)
+	_terminationHandlers: (
+	    "<MailApp: 0x7fd17a701520>",
+	    "<ActivityViewer: 0x600000072340>",
+	    "<MailTimeMachineController: 0x60000008f690>",
+	    "<MessageViewer: 0x7fd17a418940>"
+	)
+	_terminationReply: NSTerminateCancel
+Apr 14 08:50:23 Tarquins-MacBook-Pro.local Mail[7718] <Debug>: <addTerminationHandler:> Added handler: <MailboxesController: 0x618000113050>
+	_currentTerminationHandlers: (null)
+	_terminationHandlers: (
+	    "<MailApp: 0x7fd17a701520>",
+	    "<ActivityViewer: 0x600000072340>",
+	    "<MailTimeMachineController: 0x60000008f690>",
+	    "<MessageViewer: 0x7fd17a418940>",
+	    "<MailboxesController: 0x618000113050>"
+	)
+	_terminationReply: NSTerminateCancel
+Apr 14 09:38:51 Tarquins-MacBook-Pro.local Mail[7733] <Debug>: <addTerminationHandler:> Added handler: <MailApp: 0x7fdf28e00290>
+	_currentTerminationHandlers: (null)
+	_terminationHandlers: (
+	    "<MailApp: 0x7fdf28e00290>"
+	)
+	_terminationReply: NSTerminateCancel
+Apr 14 09:38:51 Tarquins-MacBook-Pro.local Mail[7733] <Debug>: <addTerminationHandler:> Added handler: <ActivityViewer: 0x6000000700c0>
+	_currentTerminationHandlers: (null)
+	_terminationHandlers: (
+	    "<MailApp: 0x7fdf28e00290>",
+	    "<ActivityViewer: 0x6000000700c0>"
+	)
+	_terminationReply: NSTerminateCancel
+Apr 14 09:38:51 Tarquins-MacBook-Pro.local Mail[7733] <Debug>: <addTerminationHandler:> Added handler: <MailTimeMachineController: 0x60000009a590>
+	_currentTerminationHandlers: (null)
+	_terminationHandlers: (
+	    "<MailApp: 0x7fdf28e00290>",
+	    "<ActivityViewer: 0x6000000700c0>",
+	    "<MailTimeMachineController: 0x60000009a590>"
+	)
+	_terminationReply: NSTerminateCancel
+Apr 14 09:38:51 Tarquins-MacBook-Pro.local Mail[7733] <Debug>: <addTerminationHandler:> Added handler: <MessageViewer: 0x7fdf28e1f9c0>
+	_currentTerminationHandlers: (null)
+	_terminationHandlers: (
+	    "<MailApp: 0x7fdf28e00290>",
+	    "<ActivityViewer: 0x6000000700c0>",
+	    "<MailTimeMachineController: 0x60000009a590>",
+	    "<MessageViewer: 0x7fdf28e1f9c0>"
+	)
+	_terminationReply: NSTerminateCancel
+Apr 14 09:38:52 Tarquins-MacBook-Pro.local Mail[7733] <Debug>: <addTerminationHandler:> Added handler: <MailboxesController: 0x618000119d70>
+	_currentTerminationHandlers: (null)
+	_terminationHandlers: (
+	    "<MailApp: 0x7fdf28e00290>",
+	    "<ActivityViewer: 0x6000000700c0>",
+	    "<MailTimeMachineController: 0x60000009a590>",
+	    "<MessageViewer: 0x7fdf28e1f9c0>",
+	    "<MailboxesController: 0x618000119d70>"
+	)
+	_terminationReply: NSTerminateCancel

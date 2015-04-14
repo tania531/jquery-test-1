@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Desktop &amp; Screen Saver</key>
+	<dict>
+		<key>DISPLAY_NAME</key>
+		<string>Desktop &amp; Screen Saver</string>
+		<key>LAST_USED</key>
+		<date>2015-04-13T16:16:03Z</date>
+		<key>URL</key>
+		<string>file:///System/Library/PreferencePanes/DesktopScreenEffectsPref.prefPane/</string>
+	</dict>
+	<key>Dock</key>
+	<dict>
+		<key>DISPLAY_NAME</key>
+		<string>Dock</string>
+		<key>LAST_USED</key>
+		<date>2015-04-13T16:11:43Z</date>
+		<key>URL</key>
+		<string>file:///System/Library/PreferencePanes/Dock.prefPane/</string>
+	</dict>
+	<key>Trackpad</key>
+	<dict>
+		<key>DISPLAY_NAME</key>
+		<string>Trackpad</string>
+		<key>LAST_USED</key>
+		<date>2015-04-13T15:36:37Z</date>
+		<key>URL</key>
+		<string>file:///System/Library/PreferencePanes/Trackpad.prefPane/</string>
+	</dict>
+	<key>atom</key>
+	<dict>
+		<key>DISPLAY_NAME</key>
+		<string>Atom</string>
+		<key>LAST_USED</key>
+		<date>2015-04-13T16:06:50Z</date>
+		<key>URL</key>
+		<string>file:///Applications/Atom.app/</string>
+	</dict>
+	<key>disp</key>
+	<dict>
+		<key>DISPLAY_NAME</key>
+		<string>Displays</string>
+		<key>LAST_USED</key>
+		<date>2015-04-13T16:16:09Z</date>
+		<key>URL</key>
+		<string>file:///System/Library/PreferencePanes/Displays.prefPane/</string>
+	</dict>
+	<key>iterm</key>
+	<dict>
+		<key>DISPLAY_NAME</key>
+		<string>iTerm</string>
+		<key>LAST_USED</key>
+		<date>2015-04-13T15:54:35Z</date>
+		<key>URL</key>
+		<string>file:///Applications/iTerm.app/</string>
+	</dict>
+	<key>sizeu</key>
+	<dict>
+		<key>DISPLAY_NAME</key>
+		<string>SizeUp.zip</string>
+		<key>LAST_USED</key>
+		<date>2015-04-13T15:39:40Z</date>
+		<key>URL</key>
+		<string>file:///Users/tania/Downloads/SizeUp.zip</string>
+	</dict>
+	<key>terminal</key>
+	<dict>
+		<key>DISPLAY_NAME</key>
+		<string>Terminal</string>
+		<key>LAST_USED</key>
+		<date>2015-04-13T16:47:06Z</date>
+		<key>URL</key>
+		<string>file:///Applications/Utilities/Terminal.app/</string>
+	</dict>
+	<key>xcode</key>
+	<dict>
+		<key>DISPLAY_NAME</key>
+		<string>Xcode</string>
+		<key>LAST_USED</key>
+		<date>2015-04-13T15:44:14Z</date>
+		<key>URL</key>
+		<string>file:///Applications/Xcode.app/</string>
+	</dict>
+</dict>
+</plist>
